@@ -370,7 +370,7 @@
       </div>
 
       <div>
-        <h1>Bolão Copa 2026</h1>
+        <h1>Bolão Se Joga na Copa 2026</h1>
         <p>FIFA World Cup • Canadá • México • Estados Unidos</p>
       </div>
 
@@ -384,11 +384,15 @@
   </div>
 
   <nav>
+    <a onclick="trocarAba('99127306')>📜 Regulamento</a>
+    <a onclick="trocarAba('683948336')>📜 Histórico</a>
+    <a  class="download-btn"  href="https://drive.google.com/uc?export=download&id=108881023300466748082"  target="_blank">  ⬇️ Baixar Regulamento </a>
+    <!-- 
     <a href="#">🏠 Início</a>
     <a href="#">📊 Classificação</a>
     <a href="#">⚽ Jogos</a>
     <a href="#">📈 Estatísticas</a>
-    <a href="#">📜 Regulamento</a>
+    -->
   </nav>
 
 </header>
@@ -402,14 +406,14 @@
     </h2>
 
     <p>
-      Acompanhe resultados, rankings, estatísticas e todos os palpites do bolão em uma experiência moderna inspirada na identidade visual da FIFA World Cup 2026.
+      Bolão entre amigos que acham que entendem de futebol e que adoram dar palpite.
     </p>
 
   </div>
 
 </section>
 
-<section class="stats">
+<!-- <section class="stats">
 
   <div class="stat-card">
     <h3>Participantes</h3>
@@ -432,6 +436,7 @@
   </div>
 
 </section>
+  -->
 
 <div class="sheet-wrapper">
 
@@ -445,6 +450,19 @@
   © 2026 • Bolão Se Joga Copa do Mundo • Atualizado automaticamente via Google Sheets
 </footer>
 
+<script>
+
+  const BASE_URL =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJ_7XaoSAdb3mPu0BCmNKSTwp7Rxwu03fuIANMCxQbg7FZvoXc-qNYY4mIKjuy7b48YatM7VLwl0lA/pubhtml?widget=true&headers=false&single=true&gid=';
+
+  function trocarAba(gid){
+
+    document.getElementById('sheetFrame').src =
+      BASE_URL + gid;
+}
+
+</script>
+  
 </body>
 </html>
 
