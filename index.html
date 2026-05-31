@@ -442,21 +442,21 @@
 
 </section>
   -->
-
+<!---
 <div class="sheet-wrapper">
-
-  <!---
   <iframe
     id="sheetFrame"    
     src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSJ_7XaoSAdb3mPu0BCmNKSTwp7Rxwu03fuIANMCxQbg7FZvoXc-qNYY4mIKjuy7b48YatM7VLwl0lA/pubhtml?widget=true&headers=false&gid=99127306">
   </iframe>
-  --->
+  
   <iframe
     id="sheetFrame"    
     src="https://sejoganacopa.vercel.app/Paginas/preview_1.html">
   </iframe>
+  
 </div>
-
+--->
+<main id="conteudo"></main>
 <footer>
   © 2026 • Bolão Se Joga Copa do Mundo • Atualizado automaticamente via Google Sheets
 </footer>
@@ -482,6 +482,25 @@ function trocarPagina(url){
 }
 
 </script>
+
+<script>
+async function carregarPagina(url){
+
+    const resposta = await fetch(url);
+
+    const html = await resposta.text();
+
+    document.getElementById('conteudo')
+    .innerHTML = html;
+}
+
+window.onload = () => {
+
+    carregarPagina('paginas/preview_1.html');
+
+}
+
+</script>
 <! Se site for aberto pelo celular, abre direto planilha para melhor navegação-->
 <!---
   <script>
@@ -495,6 +514,8 @@ if(window.innerWidth < 768){
 
 </script>
   --->
+
+  
 </body>
 </html>
 
