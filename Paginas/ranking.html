@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ranking • Bolão Copa 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --bg-dark:#031427;
+    --bg-blue:#082f66;
+
+    --accent:#00d4ff;
+    --accent2:#08f7a1;
+
+    --gold:#ffd700;
+
+    --text:#ffffff;
+
+}
+
+body{
+
+    font-family:'Montserrat',sans-serif;
+
+    background:
+    linear-gradient(135deg,#031427,#082f66);
+
+    color:white;
+
+    min-height:100vh;
+
+}
+
+header{
+
+    padding:40px 24px 20px;
+
+}
+
+.header-content{
+
+    max-width:1600px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+}
+
+.logo-icon{
+
+    width:60px;
+    height:60px;
+
+    border-radius:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:1.8rem;
+
+    background:
+    linear-gradient(135deg,var(--accent),var(--accent2));
+
+    color:#031427;
+
+    font-weight:800;
+
+    box-shadow:
+    0 10px 25px rgba(0,212,255,.35);
+
+}
+
+.logo h1{
+
+    font-size:2rem;
+    font-weight:800;
+
+}
+
+.logo p{
+
+    opacity:.7;
+    margin-top:4px;
+
+}
+
+.status{
+
+    padding:12px 18px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:blur(10px);
+
+    font-size:.95rem;
+
+}
+
+main{
+
+    width:95%;
+    max-width:1800px;
+
+    margin:auto;
+
+    padding-bottom:60px;
+
+}
+
+.table-wrapper{
+
+    overflow:auto;
+
+    border-radius:28px;
+
+    border:1px solid rgba(255,255,255,.10);
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.30);
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:1700px;
+
+}
+
+thead{
+
+    position:sticky;
+    top:0;
+
+    z-index:10;
+
+}
+
+thead th{
+
+    padding:18px 14px;
+
+    background:
+    linear-gradient(135deg,var(--accent),var(--accent2));
+
+    color:#031427;
+
+    font-size:.9rem;
+    font-weight:800;
+
+    text-align:center;
+
+    white-space:nowrap;
+
+}
+
+tbody td{
+
+    padding:16px 12px;
+
+    text-align:center;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.06);
+
+    white-space:nowrap;
+
+    font-size:.95rem;
+
+}
+
+tbody tr{
+
+    transition:.25s ease;
+
+}
+
+tbody tr:hover{
+
+    background:rgba(255,255,255,.06);
+
+}
+
+.posicao{
+
+    font-weight:800;
+    color:var(--gold);
+
+}
+
+.apostador{
+
+    text-align:left;
+
+    font-weight:700;
+
+}
+
+.pontos{
+
+    font-size:1.1rem;
+    font-weight:800;
+
+    color:var(--accent2);
+
+}
+
+.loading{
+
+    padding:80px 20px;
+
+    text-align:center;
+
+    opacity:.7;
+
+}
+
+footer{
+
+    text-align:center;
+
+    padding:30px 20px 50px;
+
+    opacity:.6;
+
+}
+
+@media(max-width:768px){
+
+    header{
+
+        padding:28px 16px 16px;
+
+    }
+
+    .logo h1{
+
+        font-size:1.5rem;
+
+    }
+
+    .table-wrapper{
+
+        border-radius:18px;
+
+    }
+
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+
+    <div class="header-content">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🏆
+            </div>
+
+            <div>
+                <h1>Ranking do Bolão</h1>
+                <p>Copa do Mundo FIFA 2026</p>
+            </div>
+
+        </div>
+
+        <div class="status">
+            Atualização automática via Google Sheets
+        </div>
+
+    </div>
+
+</header>
+
+<main>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Posição</th>
+                    <th>Apostador</th>
+                    <th>Pontos</th>
+                    <th>Placar Exato<br>(12 pt)</th>
+                    <th>Venc + Pl Exato<br>(6 pt)</th>
+                    <th>Venc + Pl Perd<br>(5 pt)</th>
+                    <th>Venc<br>(3 pt)</th>
+                    <th>Empate<br>(5 pt)</th>
+                    <th>Alg Pl.<br>(2 pt)</th>
+                    <th>Zerou Tudo</th>
+                    <th>2as de Final<br>(3 pt)</th>
+                    <th>Oitavas<br>(5 pt)</th>
+                    <th>Quartas<br>(10 pt)</th>
+                    <th>Semi<br>(15 pt)</th>
+                    <th>Final<br>(20 pt)</th>
+                    <th>Campeão<br>(30 pt)</th>
+                    <th>Artilheiro<br>(30 pt)</th>
+                </tr>
+            </thead>
+
+            <tbody id="ranking-body">
+
+                <tr>
+                    <td colspan="17" class="loading">
+                        Carregando ranking...
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+<footer>
+    © 2026 • Bolão Copa do Mundo • Powered by Google Sheets
+</footer>
+
+<script>
+
+/*
+===========================================
+CONFIGURAÇÃO GOOGLE SHEETS
+===========================================
+
+1. Publique a planilha na web
+
+Google Sheets:
+Arquivo → Compartilhar → Publicar na Web
+
+2. Substitua abaixo:
+
+SHEET_ID
+GID
+
+===========================================
+*/
+
+const SHEET_ID = 'COLE_AQUI_O_ID_DA_PLANILHA';
+
+const GID = '170744389';
+
+const URL =
+`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+
+async function carregarRanking(){
+
+    try{
+
+        const resposta = await fetch(URL);
+
+        const texto = await resposta.text();
+
+        const json =
+        JSON.parse(texto.substr(47).slice(0,-2));
+
+        const rows = json.table.rows;
+
+        let html = '';
+
+        rows.forEach((row,index)=>{
+
+            const col = row.c;
+
+            html += `
+            <tr>
+
+                <td class="posicao">${col[0]?.v ?? ''}</td>
+
+                <td class="apostador">${col[1]?.v ?? ''}</td>
+
+                <td class="pontos">${col[2]?.v ?? ''}</td>
+
+                <td>${col[3]?.v ?? ''}</td>
+                <td>${col[4]?.v ?? ''}</td>
+                <td>${col[5]?.v ?? ''}</td>
+                <td>${col[6]?.v ?? ''}</td>
+                <td>${col[7]?.v ?? ''}</td>
+                <td>${col[8]?.v ?? ''}</td>
+                <td>${col[9]?.v ?? ''}</td>
+                <td>${col[10]?.v ?? ''}</td>
+                <td>${col[11]?.v ?? ''}</td>
+                <td>${col[12]?.v ?? ''}</td>
+                <td>${col[13]?.v ?? ''}</td>
+                <td>${col[14]?.v ?? ''}</td>
+                <td>${col[15]?.v ?? ''}</td>
+                <td>${col[16]?.v ?? ''}</td>
+
+            </tr>
+            `;
+
+        });
+
+        document.getElementById('ranking-body')
+        .innerHTML = html;
+
+    }catch(erro){
+
+        console.error(erro);
+
+        document.getElementById('ranking-body')
+        .innerHTML = `
+        <tr>
+            <td colspan="17" class="loading">
+                Erro ao carregar ranking.
+            </td>
+        </tr>
+        `;
+
+    }
+
+}
+
+carregarRanking();
+
+</script>
+
+</body>
+</html>
