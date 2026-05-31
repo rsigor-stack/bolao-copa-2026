@@ -1,434 +1,399 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Ranking • Bolão Copa 2026</title>
 
-<style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-:root{
+  <style>
 
-    --bg-dark:#031427;
-    --bg-blue:#082f66;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-    --accent:#00d4ff;
-    --accent2:#08f7a1;
+    body{
 
-    --gold:#ffd700;
+      font-family:'Montserrat',sans-serif;
 
-    --text:#ffffff;
+      background:
+      linear-gradient(135deg,#031427,#082f66);
 
-}
+      color:white;
 
-body{
+      min-height:100vh;
 
-    font-family:'Montserrat',sans-serif;
-
-    background:
-    linear-gradient(135deg,#031427,#082f66);
-
-    color:white;
-
-    min-height:100vh;
-
-}
-
-header{
-
-    padding:40px 24px 20px;
-
-}
-
-.header-content{
-
-    max-width:1600px;
-    margin:auto;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-
-    flex-wrap:wrap;
-
-}
-
-.logo{
-
-    display:flex;
-    align-items:center;
-    gap:16px;
-
-}
-
-.logo-icon{
-
-    width:60px;
-    height:60px;
-
-    border-radius:18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:1.8rem;
-
-    background:
-    linear-gradient(135deg,var(--accent),var(--accent2));
-
-    color:#031427;
-
-    font-weight:800;
-
-    box-shadow:
-    0 10px 25px rgba(0,212,255,.35);
-
-}
-
-.logo h1{
-
-    font-size:2rem;
-    font-weight:800;
-
-}
-
-.logo p{
-
-    opacity:.7;
-    margin-top:4px;
-
-}
-
-.status{
-
-    padding:12px 18px;
-
-    border-radius:999px;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid rgba(255,255,255,.10);
-
-    backdrop-filter:blur(10px);
-
-    font-size:.95rem;
-
-}
-
-main{
-
-    width:95%;
-    max-width:1800px;
-
-    margin:auto;
-
-    padding-bottom:60px;
-
-}
-
-.table-wrapper{
-
-    overflow:auto;
-
-    border-radius:28px;
-
-    border:1px solid rgba(255,255,255,.10);
-
-    background:rgba(255,255,255,.08);
-
-    backdrop-filter:blur(14px);
-
-    box-shadow:
-    0 20px 50px rgba(0,0,0,.30);
-
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    min-width:1700px;
-
-}
-
-thead{
-
-    position:sticky;
-    top:0;
-
-    z-index:10;
-
-}
-
-thead th{
-
-    padding:18px 14px;
-
-    background:
-    linear-gradient(135deg,var(--accent),var(--accent2));
-
-    color:#031427;
-
-    font-size:.9rem;
-    font-weight:800;
-
-    text-align:center;
-
-    white-space:nowrap;
-
-}
-
-tbody td{
-
-    padding:16px 12px;
-
-    text-align:center;
-
-    border-bottom:
-    1px solid rgba(255,255,255,.06);
-
-    white-space:nowrap;
-
-    font-size:.95rem;
-
-}
-
-tbody tr{
-
-    transition:.25s ease;
-
-}
-
-tbody tr:hover{
-
-    background:rgba(255,255,255,.06);
-
-}
-
-.posicao{
-
-    font-weight:800;
-    color:var(--gold);
-
-}
-
-.apostador{
-
-    text-align:left;
-
-    font-weight:700;
-
-}
-
-.pontos{
-
-    font-size:1.1rem;
-    font-weight:800;
-
-    color:var(--accent2);
-
-}
-
-.loading{
-
-    padding:80px 20px;
-
-    text-align:center;
-
-    opacity:.7;
-
-}
-
-footer{
-
-    text-align:center;
-
-    padding:30px 20px 50px;
-
-    opacity:.6;
-
-}
-
-@media(max-width:768px){
-
-    header{
-
-        padding:28px 16px 16px;
+      padding:40px 20px;
 
     }
 
-    .logo h1{
+    .container{
 
-        font-size:1.5rem;
+      max-width:1800px;
+      margin:auto;
+
+    }
+
+    .header{
+
+      margin-bottom:30px;
+
+    }
+
+    .header h1{
+
+      font-size:3rem;
+      font-weight:800;
+
+      margin-bottom:10px;
+
+    }
+
+    .header p{
+
+      opacity:.8;
 
     }
 
     .table-wrapper{
 
-        border-radius:18px;
+      overflow:auto;
+
+      border-radius:24px;
+
+      background:rgba(255,255,255,.08);
+
+      border:1px solid rgba(255,255,255,.12);
+
+      backdrop-filter:blur(12px);
+
+      box-shadow:
+      0 20px 50px rgba(0,0,0,.35);
 
     }
 
-}
+    table{
 
-</style>
+      width:100%;
+
+      border-collapse:collapse;
+
+      min-width:1700px;
+
+    }
+
+    thead{
+
+      background:
+      linear-gradient(135deg,#00d4ff,#08f7a1);
+
+      color:#04142d;
+
+      position:sticky;
+      top:0;
+
+      z-index:10;
+
+    }
+
+    th{
+
+      padding:18px 14px;
+
+      text-align:center;
+
+      font-size:.85rem;
+      font-weight:800;
+
+      white-space:nowrap;
+
+    }
+
+    td{
+
+      padding:16px 14px;
+
+      text-align:center;
+
+      border-bottom:
+      1px solid rgba(255,255,255,.08);
+
+      font-size:.92rem;
+
+    }
+
+    tbody tr{
+
+      transition:.25s ease;
+
+    }
+
+    tbody tr:hover{
+
+      background:
+      rgba(255,255,255,.05);
+
+    }
+
+    tbody tr:nth-child(1){
+
+      background:
+      rgba(255,215,0,.12);
+
+    }
+
+    tbody tr:nth-child(2){
+
+      background:
+      rgba(192,192,192,.10);
+
+    }
+
+    tbody tr:nth-child(3){
+
+      background:
+      rgba(205,127,50,.10);
+
+    }
+
+    .posicao{
+
+      font-weight:800;
+      font-size:1.1rem;
+
+    }
+
+    .apostador{
+
+      text-align:left;
+      font-weight:700;
+
+      min-width:220px;
+
+    }
+
+    .pontos{
+
+      font-weight:800;
+      color:#08f7a1;
+
+    }
+
+    .loading{
+
+      text-align:center;
+
+      padding:60px;
+
+      opacity:.7;
+
+      font-size:1.1rem;
+
+    }
+
+    @media(max-width:768px){
+
+      body{
+
+        padding:20px 10px;
+
+      }
+
+      .header h1{
+
+        font-size:2rem;
+
+      }
+
+    }
+
+  </style>
 
 </head>
+
 <body>
 
-<main>
+<div class="container">
 
-    <div class="table-wrapper">
+  <div class="header">
 
-        <table>
+    <h1>🏆 Ranking Geral</h1>
 
-            <thead>
-                <tr>
-                    <th>Posição</th>
-                    <th>Apostador</th>
-                    <th>Pontos</th>
-                    <th>Placar Exato<br>(12 pt)</th>
-                    <th>Venc + Pl Exato<br>(6 pt)</th>
-                    <th>Venc + Pl Perd<br>(5 pt)</th>
-                    <th>Venc<br>(3 pt)</th>
-                    <th>Empate<br>(5 pt)</th>
-                    <th>Alg Pl.<br>(2 pt)</th>
-                    <th>Zerou Tudo</th>
-                    <th>2as de Final<br>(3 pt)</th>
-                    <th>Oitavas<br>(5 pt)</th>
-                    <th>Quartas<br>(10 pt)</th>
-                    <th>Semi<br>(15 pt)</th>
-                    <th>Final<br>(20 pt)</th>
-                    <th>Campeão<br>(30 pt)</th>
-                    <th>Artilheiro<br>(30 pt)</th>
-                </tr>
-            </thead>
+    <p>
+      Bolão Copa do Mundo 2026 • Atualização automática via Google Sheets
+    </p>
 
-            <tbody id="ranking-body">
+  </div>
 
-                <tr>
-                    <td colspan="17" class="loading">
-                        Carregando ranking...
-                    </td>
-                </tr>
+  <div class="table-wrapper">
 
-            </tbody>
+    <table>
 
-        </table>
+      <thead>
 
-    </div>
+        <tr>
 
-</main>
+          <th>Posição</th>
+          <th>Apostador</th>
+          <th>Pontos</th>
+          <th>Placar Exato (12 pt)</th>
+          <th>Venc + Pl Exato (6 pt)</th>
+          <th>Venc + Pl Perd (5 pt)</th>
+          <th>Venc (3 pt)</th>
+          <th>Empate (5 pt)</th>
+          <th>Alg Pl. (2 pt)</th>
+          <th>Zerou Tudo</th>
+          <th>2as de Final (3 pt)</th>
+          <th>Oitavas (5 pt)</th>
+          <th>Quartas (10 pt)</th>
+          <th>Semi (15 pt)</th>
+          <th>Final (20 pt)</th>
+          <th>Campeão (30 pt)</th>
+          <th>Artilheiro (30 pt)</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="ranking-body">
+
+        <tr>
+          <td colspan="17" class="loading">
+
+            Carregando ranking...
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
 <script>
 
-/*
-===========================================
-CONFIGURAÇÃO GOOGLE SHEETS
-===========================================
+  /*
+  ==========================================
+  CONFIGURAÇÃO GOOGLE SHEETS
+  ==========================================
+  */
 
-1. Publique a planilha na web
+  const SHEET_ID = 'SEU_ID_DA_PLANILHA';
 
-Google Sheets:
-Arquivo → Compartilhar → Publicar na Web
+  const GID = '170744389';
 
-2. Substitua abaixo:
+  const URL =
+  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
 
-SHEET_ID
-GID
+  /*
+  ==========================================
+  LEITURA DOS DADOS
+  ==========================================
+  */
 
-===========================================
-*/
+  fetch(URL)
 
-const SHEET_ID = '1fdqehi8cSjY4wHg9izoZgsMeamPEh9wbaRo3siRDRBc';
+  .then(response => response.text())
 
-const GID = '941415056';
+  .then(data => {
 
-const URL =
-`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+      const json =
+      JSON.parse(data.substr(47).slice(0,-2));
 
-async function carregarRanking(){
+      const rows = json.table.rows;
 
-    try{
+      const tbody =
+      document.getElementById('ranking-body');
 
-        const resposta = await fetch(URL);
+      tbody.innerHTML = '';
 
-        const texto = await resposta.text();
+      /*
+      ==========================================
+      DADOS COMEÇAM NA LINHA 6
+      ==========================================
+      */
 
-        const json =
-        JSON.parse(texto.substr(47).slice(0,-2));
+      const dados =
+      rows.slice(5);
 
-        const rows = json.table.rows;
+      dados.forEach((row,index)=>{
 
-        let html = '';
+          const colunas =
+          row.c || [];
 
-        rows.forEach((row,index)=>{
+          const tr =
+          document.createElement('tr');
 
-            const col = row.c;
+          tr.innerHTML = `
 
-            html += `
-            <tr>
-
-                <td class="posicao">${col[0]?.v ?? ''}</td>
-
-                <td class="apostador">${col[1]?.v ?? ''}</td>
-
-                <td class="pontos">${col[2]?.v ?? ''}</td>
-
-                <td>${col[3]?.v ?? ''}</td>
-                <td>${col[4]?.v ?? ''}</td>
-                <td>${col[5]?.v ?? ''}</td>
-                <td>${col[6]?.v ?? ''}</td>
-                <td>${col[7]?.v ?? ''}</td>
-                <td>${col[8]?.v ?? ''}</td>
-                <td>${col[9]?.v ?? ''}</td>
-                <td>${col[10]?.v ?? ''}</td>
-                <td>${col[11]?.v ?? ''}</td>
-                <td>${col[12]?.v ?? ''}</td>
-                <td>${col[13]?.v ?? ''}</td>
-                <td>${col[14]?.v ?? ''}</td>
-                <td>${col[15]?.v ?? ''}</td>
-                <td>${col[16]?.v ?? ''}</td>
-
-            </tr>
-            `;
-
-        });
-
-        document.getElementById('ranking-body')
-        .innerHTML = html;
-
-    }catch(erro){
-
-        console.error(erro);
-
-        document.getElementById('ranking-body')
-        .innerHTML = `
-        <tr>
-            <td colspan="17" class="loading">
-                Erro ao carregar ranking.
+            <td class="posicao">
+              ${colunas[0]?.v ?? ''}
             </td>
+
+            <td class="apostador">
+              ${colunas[1]?.v ?? ''}
+            </td>
+
+            <td class="pontos">
+              ${colunas[2]?.v ?? ''}
+            </td>
+
+            <td>${colunas[3]?.v ?? ''}</td>
+            <td>${colunas[4]?.v ?? ''}</td>
+            <td>${colunas[5]?.v ?? ''}</td>
+            <td>${colunas[6]?.v ?? ''}</td>
+            <td>${colunas[7]?.v ?? ''}</td>
+            <td>${colunas[8]?.v ?? ''}</td>
+            <td>${colunas[9]?.v ?? ''}</td>
+            <td>${colunas[10]?.v ?? ''}</td>
+            <td>${colunas[11]?.v ?? ''}</td>
+            <td>${colunas[12]?.v ?? ''}</td>
+            <td>${colunas[13]?.v ?? ''}</td>
+            <td>${colunas[14]?.v ?? ''}</td>
+            <td>${colunas[15]?.v ?? ''}</td>
+            <td>${colunas[16]?.v ?? ''}</td>
+
+          `;
+
+          tbody.appendChild(tr);
+
+      });
+
+  })
+
+  .catch(error => {
+
+      console.error(error);
+
+      document.getElementById('ranking-body')
+      .innerHTML = `
+
+        <tr>
+
+          <td colspan="17" class="loading">
+
+            Erro ao carregar dados da planilha.
+
+          </td>
+
         </tr>
-        `;
 
-    }
+      `;
 
-}
-
-carregarRanking();
+  });
 
 </script>
 
