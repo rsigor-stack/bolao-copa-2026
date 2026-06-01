@@ -21,11 +21,17 @@
       box-sizing:border-box;
     }
 
+    html{
+      scroll-behavior:smooth;
+    }
+
     body{
 
       font-family:'Montserrat',sans-serif;
 
       background:
+      radial-gradient(circle at top left, rgba(0,212,255,.18), transparent 20%),
+      radial-gradient(circle at bottom right, rgba(8,247,161,.10), transparent 20%),
       linear-gradient(135deg,#031427,#082f66);
 
       color:white;
@@ -38,7 +44,7 @@
 
     .container{
 
-      max-width:1800px;
+      max-width:1900px;
       margin:auto;
 
     }
@@ -51,10 +57,11 @@
 
     .header h1{
 
-      font-size:3rem;
+      font-size:clamp(2rem,5vw,4rem);
+
       font-weight:800;
 
-      margin-bottom:10px;
+      margin-bottom:12px;
 
     }
 
@@ -62,22 +69,24 @@
 
       opacity:.8;
 
+      font-size:1rem;
+
     }
 
     .table-wrapper{
 
       overflow:auto;
 
-      border-radius:24px;
+      border-radius:28px;
 
       background:rgba(255,255,255,.08);
 
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.10);
 
-      backdrop-filter:blur(12px);
+      backdrop-filter:blur(14px);
 
       box-shadow:
-      0 20px 50px rgba(0,0,0,.35);
+      0 20px 60px rgba(0,0,0,.35);
 
     }
 
@@ -87,7 +96,7 @@
 
       border-collapse:collapse;
 
-      min-width:1700px;
+      min-width:1800px;
 
     }
 
@@ -111,10 +120,11 @@
 
       text-align:center;
 
-      font-size:.85rem;
-      font-weight:800;
-
       white-space:nowrap;
+
+      font-size:.85rem;
+
+      font-weight:800;
 
     }
 
@@ -125,7 +135,7 @@
       text-align:center;
 
       border-bottom:
-      1px solid rgba(255,255,255,.08);
+      1px solid rgba(255,255,255,.06);
 
       font-size:.92rem;
 
@@ -175,6 +185,7 @@
     .apostador{
 
       text-align:left;
+
       font-weight:700;
 
       min-width:220px;
@@ -184,19 +195,65 @@
     .pontos{
 
       font-weight:800;
+
       color:#08f7a1;
+
+      font-size:1rem;
 
     }
 
     .loading{
 
-      text-align:center;
-
       padding:60px;
+
+      text-align:center;
 
       opacity:.7;
 
-      font-size:1.1rem;
+      font-size:1rem;
+
+    }
+
+    .botao-topo{
+
+      position:fixed;
+
+      right:24px;
+      bottom:24px;
+
+      width:58px;
+      height:58px;
+
+      border-radius:50%;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      text-decoration:none;
+
+      background:
+      linear-gradient(135deg,#00d4ff,#08f7a1);
+
+      color:#04142d;
+
+      font-size:1.5rem;
+      font-weight:800;
+
+      box-shadow:
+      0 10px 25px rgba(0,212,255,.35);
+
+      z-index:999;
+
+      transition:.25s ease;
+
+    }
+
+    .botao-topo:hover{
+
+      transform:
+      translateY(-4px)
+      scale(1.08);
 
     }
 
@@ -208,9 +265,15 @@
 
       }
 
-      .header h1{
+      .table-wrapper{
 
-        font-size:2rem;
+        border-radius:20px;
+
+      }
+
+      td{
+
+        padding:14px 10px;
 
       }
 
@@ -220,7 +283,7 @@
 
 </head>
 
-<body>
+<body id="topo">
 
 <div class="container">
 
@@ -229,7 +292,7 @@
     <h1>🏆 Ranking Geral</h1>
 
     <p>
-      Bolão Copa do Mundo 2026 • Atualização automática via Google Sheets
+      Bolão Copa do Mundo 2026 • Atualização automática em tempo real
     </p>
 
   </div>
@@ -267,11 +330,13 @@
       <tbody id="ranking-body">
 
         <tr>
+
           <td colspan="17" class="loading">
 
             Carregando ranking...
 
           </td>
+
         </tr>
 
       </tbody>
@@ -282,24 +347,30 @@
 
 </div>
 
+<a href="#topo" class="botao-topo">
+  🏆
+</a>
+
 <script>
 
   /*
   ==========================================
-  CONFIGURAÇÃO GOOGLE SHEETS
+  GOOGLE SHEETS
   ==========================================
   */
 
-  const SHEET_ID = 'SEU_ID_DA_PLANILHA';
+  const SHEET_ID =
+  '1fdqehi8cSjY4wHg9izoZgsMeamPEh9wbaRo3siRDRBc';
 
-  const GID = '170744389';
+  const GID =
+  '941415056';
 
   const URL =
   `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
 
   /*
   ==========================================
-  LEITURA DOS DADOS
+  FETCH DOS DADOS
   ==========================================
   */
 
@@ -312,7 +383,8 @@
       const json =
       JSON.parse(data.substr(47).slice(0,-2));
 
-      const rows = json.table.rows;
+      const rows =
+      json.table.rows;
 
       const tbody =
       document.getElementById('ranking-body');
@@ -328,9 +400,9 @@
       const dados =
       rows.slice(5);
 
-      dados.forEach((row,index)=>{
+      dados.forEach((row)=>{
 
-          const colunas =
+          const c =
           row.c || [];
 
           const tr =
@@ -339,31 +411,31 @@
           tr.innerHTML = `
 
             <td class="posicao">
-              ${colunas[0]?.v ?? ''}
+              ${c[0]?.v ?? ''}
             </td>
 
             <td class="apostador">
-              ${colunas[1]?.v ?? ''}
+              ${c[1]?.v ?? ''}
             </td>
 
             <td class="pontos">
-              ${colunas[2]?.v ?? ''}
+              ${c[2]?.v ?? ''}
             </td>
 
-            <td>${colunas[3]?.v ?? ''}</td>
-            <td>${colunas[4]?.v ?? ''}</td>
-            <td>${colunas[5]?.v ?? ''}</td>
-            <td>${colunas[6]?.v ?? ''}</td>
-            <td>${colunas[7]?.v ?? ''}</td>
-            <td>${colunas[8]?.v ?? ''}</td>
-            <td>${colunas[9]?.v ?? ''}</td>
-            <td>${colunas[10]?.v ?? ''}</td>
-            <td>${colunas[11]?.v ?? ''}</td>
-            <td>${colunas[12]?.v ?? ''}</td>
-            <td>${colunas[13]?.v ?? ''}</td>
-            <td>${colunas[14]?.v ?? ''}</td>
-            <td>${colunas[15]?.v ?? ''}</td>
-            <td>${colunas[16]?.v ?? ''}</td>
+            <td>${c[3]?.v ?? ''}</td>
+            <td>${c[4]?.v ?? ''}</td>
+            <td>${c[5]?.v ?? ''}</td>
+            <td>${c[6]?.v ?? ''}</td>
+            <td>${c[7]?.v ?? ''}</td>
+            <td>${c[8]?.v ?? ''}</td>
+            <td>${c[9]?.v ?? ''}</td>
+            <td>${c[10]?.v ?? ''}</td>
+            <td>${c[11]?.v ?? ''}</td>
+            <td>${c[12]?.v ?? ''}</td>
+            <td>${c[13]?.v ?? ''}</td>
+            <td>${c[14]?.v ?? ''}</td>
+            <td>${c[15]?.v ?? ''}</td>
+            <td>${c[16]?.v ?? ''}</td>
 
           `;
 
