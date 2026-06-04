@@ -184,7 +184,7 @@ tbody tr:nth-child(3){
 
     <div class="table-wrapper">
 
-        <table>
+        <table id="data">
 
             <thead>
 
@@ -216,76 +216,31 @@ tbody tr:nth-child(3){
             </tbody>
 
         </table>
+         <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+         <script type="text/javascript" src="https://cdn.datatables.net/2.3.8/js/dataTables.js"></script>
+         <script>
+	        new DataTable('#data', {
+	            ajax: 'https://script.google.com/macros/s/AKfycbztMaYq2BlP3RMu_3wplQ3E7aVbNTs00QnBK62D71Ft3MsQmfS_MUZK1g7RIBlSFEh8/exec',
+	            columns: [
+        	        { data: 'Pos' },
+	                { data: 'Aposta' },
+        	        { data: 'Apostador' },
+	                { data: 'Ptos' },
+        	        { data: 'Pl_Exato' },
+        	        { data: 'Venc_PlVenc' },
+        	        { data: 'Venc_PlPerd' },
+        	        { data: 'Venc' },
+        	        { data: 'Empate' },
+        	        { data: 'Alg_Pl' },
+	                { data: 'ZerouTudo' }
+	            ]
+	        });
+        </script>
 
     </div>
 
 </div>
-
-<script>
-
-const URL_DBASE =
-'https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnSbq9S3tbkDcS7iqdMI8OpT-M89Za6i1r-AGjnD3kAgxSZfOUXITplwVzlcxYZ4ywS3HbgBjL108AmsPYszeWDZBuDu_ulamEGbDdLhNN9WT_KaSn7MjnsFj8kqNAAPWeWDeSVpPv9K9kIpxtW77Aybol6pQh-ic_4QM3AsuIeq5ySfNUmPwRpvB_AkZ2dKPv1g2M-mfMEk-qOGbpkXGTydASS4axVzp-StIxvZqDA2Zn88row6U8dnes3Mq0PygHJcAIjtWYzrYnHVcYm1Pz7Ezjhd0w&lib=MoGNgPJGOKUFPzP7D6tyawBQ2SN0MrW_W';
-
-async function carregarRanking(){
-
-    try{
-
-        const response =
-        await fetch(URL_DBASE);
-
-        const dados =
-        await response.json();
-
-        const tbody =
-        document.getElementById('ranking');
-
-        tbody.innerHTML = '';
-
-        dados.forEach(item => {
-
-            const tr =
-            document.createElement('tr');
-
-            tr.innerHTML = `
-
-                <td>${item["Posição"] ?? ''}</td>
-                <td class="apostador">${item["Apostador"] ?? ''}</td>
-                <td>${item["Aposta"] ?? ''}</td>
-                <td>${item["Pontos"] ?? ''}</td>
-
-                <td>${item["Placar Exato (12 pt)"] ?? ''}</td>
-                <td>${item["Venc + Pl Venc (6 pt)"] ?? ''}</td>
-                <td>${item["Venc + Pl Perd (5 pt)"] ?? ''}</td>
-                <td>${item["Venc (3 pt)"] ?? ''}</td>
-                <td>${item["Empate (5 pt)"] ?? ''}</td>
-                <td>${item["Alg Pl. (2 pt)"] ?? ''}</td>
-                <td>${item["Zerou Tudo"] ?? ''}</td>
-            `;
-
-            tbody.appendChild(tr);
-
-        });
-
-    }
-    catch(erro){
-
-        console.error(erro);
-
-        document.getElementById('ranking').innerHTML = `
-            <tr>
-                <td colspan="17" class="loading">
-                    Erro ao carregar dados.
-                </td>
-            </tr>
-        `;
-
-    }
-
-}
-
-carregarRanking();
-
-</script>
 
 </body>
 </html>
