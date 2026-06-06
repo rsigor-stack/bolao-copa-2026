@@ -7,8 +7,9 @@
   <title>Bolão Se Joga Copa do Mundo 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.8/css/dataTables.dataTables.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+	
   <style>
     * {
       margin: 0;
@@ -227,6 +228,30 @@
       box-shadow:
         0 25px 60px rgba(0,0,0,.35);
     }
+	/*CABEÇALHO*/
+	#data tbody td,
+	table.dataTable tbody td {
+	    border-right:
+        1px solid rgba(255,255,255,.10);
+	    border-bottom:
+        1px solid rgba(255,255,255,.08);
+	}
+	/* Remove a borda da última coluna */
+	#data tbody td:last-child,
+	table.dataTable tbody td:last-child {
+    	border-right: none;
+	}
+	table.dataTable {
+    	border-collapse: separate !important;
+    	border-spacing: 0;
+	}
+	table.dataTable thead th:first-child {
+	    border-top-left-radius: 18px;
+	}
+	table.dataTable thead th:last-child {
+	    border-top-right-radius: 18px;
+	}
+	/* FIM CABEÇALHO */
 	/* TOP 5 */
 	.top1{
 	    background:
