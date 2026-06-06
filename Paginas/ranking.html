@@ -392,6 +392,16 @@ new DataTable('#data', {
 		{ data: 'Alg_Pl' },
 		{ data: 'ZerouTudo' }
 	],
+	columnDefs: [
+    {
+        targets: '_all',
+        className: 'dt-center'
+    },
+    {
+        targets: 2,
+        className: 'dt-left'
+    }
+	]
 	order: [[0, 'asc']],
 	pageLength: 50,
 	language: {
