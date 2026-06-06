@@ -346,6 +346,13 @@ new DataTable('#data', {
 	]
 });
 </script>
+<script>
+async function carregarPagina(url){
+    const resposta = await fetch(url);
+    const html = await resposta.text();
+    document.getElementById('conteudo').innerHTML = html;
+}
+</script>
 
 </body>
 </html>
