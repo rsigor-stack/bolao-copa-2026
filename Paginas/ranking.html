@@ -227,6 +227,56 @@
       box-shadow:
         0 25px 60px rgba(0,0,0,.35);
     }
+	/* TOP 5 */
+	.top1{
+	    background:
+	        linear-gradient(
+	            90deg,
+	            rgba(255,215,0,.28),
+	            rgba(255,215,0,.12)
+	        ) !important;
+	    font-weight:700;
+	}
+	.top2{
+	    background:
+	        linear-gradient(
+	            90deg,
+	            rgba(192,192,192,.22),
+	            rgba(192,192,192,.10)
+	        ) !important;
+	}
+	.top3{
+	    background:
+	        linear-gradient(
+	            90deg,
+	            rgba(205,127,50,.22),
+	            rgba(205,127,50,.10)
+	        ) !important;
+	}
+	.top4{
+	    background:
+	        rgba(0,212,255,.10) !important;
+	}
+	.top5{
+	    background:
+	        rgba(8,247,161,.10) !important;
+	}
+	
+	/* Medalhas */
+	.top1 td:first-child::before{
+	    content:"🥇 ";
+	}
+	.top2 td:first-child::before{
+	    content:"🥈 ";
+	}
+	.top3 td:first-child::before{
+	    content:"🥉 ";
+	}
+	.top4 td:first-child::before,
+	.top5 td:first-child::before{
+	    content:"⭐ ";
+	}  
+	/* */
     iframe {
       width: 100%;
       height: 85vh;
@@ -328,7 +378,10 @@
 <script type="text/javascript" src="https://cdn.datatables.net/2.3.8/js/dataTables.js"></script>
 <script>
 new DataTable('#data', {
-	ajax: 'https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnQq0ptJUFK3CAJ7iEFLnE7hCz6oBUwzlD5r4N72LqKmgweOW0gCuA3ElzgrmA1qMqw8EaHvyCDFGoCVbjyGv6qQt-zE_I0wWwsFwqiZ-kYtxPI5WE5oxOzMS28EVH8o4q7Er2OztKPtXVzgeUP76KJfWFa4G23lcdzjPySE8enItGblaBJC5jWcQ9BDF3x2DbSueR7OaWjlzVb4vnKZD67CYv8iDJ941-az1hM2oQRmDHP_OA9v5wVazU2w8OQ5EFyqbAYpM9OgGc0IVzxDmgy_jWda9A&lib=MoGNgPJGOKUFPzP7D6tyawBQ2SN0MrW_W',
+	ajax: {
+		url: 'https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnQq0ptJUFK3CAJ7iEFLnE7hCz6oBUwzlD5r4N72LqKmgweOW0gCuA3ElzgrmA1qMqw8EaHvyCDFGoCVbjyGv6qQt-zE_I0wWwsFwqiZ-kYtxPI5WE5oxOzMS28EVH8o4q7Er2OztKPtXVzgeUP76KJfWFa4G23lcdzjPySE8enItGblaBJC5jWcQ9BDF3x2DbSueR7OaWjlzVb4vnKZD67CYv8iDJ941-az1hM2oQRmDHP_OA9v5wVazU2w8OQ5EFyqbAYpM9OgGc0IVzxDmgy_jWda9A&lib=MoGNgPJGOKUFPzP7D6tyawBQ2SN0MrW_W',
+		dataSrc: ''
+	},
 	columns: [
 		{ data: 'Pos' },
 		{ data: 'Aposta' },
@@ -341,7 +394,44 @@ new DataTable('#data', {
 		{ data: 'Empate' },
 		{ data: 'Alg_Pl' },
 		{ data: 'ZerouTudo' }
-	]
+	],
+	order: [[0, 'asc']],
+	pageLength: 50,
+	language: {
+		url: 'https://cdn.datatables.net/plug-ins/2.3.8/i18n/pt-BR.json'
+	},
+
+    createdRow: function(row, data) {
+        const posicao = Number(data.Pos);
+        row.classList.remove(
+            'top1',
+            'top2',
+            'top3',
+            'top4',
+            'top5'
+        );
+        switch(posicao){
+            case 1:
+                row.classList.add('top1');
+                break;
+
+            case 2:
+                row.classList.add('top2');
+                break;
+
+            case 3:
+                row.classList.add('top3');
+                break;
+
+            case 4:
+                row.classList.add('top4');
+                break;
+
+            case 5:
+                row.classList.add('top5');
+                break;
+        }
+    }
 });
 </script>
 <script>
