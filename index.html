@@ -302,16 +302,6 @@
 <footer>
   © 2026 • Bolão Se Joga Copa do Mundo • Atualizado automaticamente via Google Sheets
 </footer>
-<!--
-<script>
-/* superado */
-  const BASE_URL =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJ_7XaoSAdb3mPu0BCmNKSTwp7Rxwu03fuIANMCxQbg7FZvoXc-qNYY4mIKjuy7b48YatM7VLwl0lA/pubhtml?widget=true&headers=false&single=true&gid=';
-  function trocarAba(gid){
-    document.getElementById('sheetFrame').src = BASE_URL + gid;
-}
-</script>
--->
 
 <script>
 async function carregarPagina(url){
@@ -320,11 +310,12 @@ async function carregarPagina(url){
     document.getElementById('conteudo').innerHTML = html;
 }
 
-window.onload = () => {
+/*
+  window.onload = () => {
     <!--- carregarPagina('Paginas/contador.html'); --->
     window.location.href='Paginas/contador.html;
 }
-
+*/
 </script>
   
 </body>
