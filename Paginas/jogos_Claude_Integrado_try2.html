@@ -353,6 +353,7 @@
       .jogos-grid { grid-template-columns: 1fr; }
       .resumo-grid { grid-template-columns: repeat(3,1fr); }
     }
+.jogo-bandeira { width: 36px; height: 27px; border-radius: 4px; object-fit: cover; display: block; }
   </style>
 </head>
 <body id="topo">
@@ -442,51 +443,80 @@ const URLS = {
 };
 
 // ═══════════════════════════════════════════════════════════════
-//  DICIONÁRIO — nome do país → emoji de bandeira
-//  Ajuste os nomes conforme estão escritos na sua planilha
+//  DICIONÁRIO — 48 seleções classificadas para a Copa 2026
+//  Chave: nome em português (conforme planilha) → código flagcdn
 // ═══════════════════════════════════════════════════════════════
 const BANDEIRAS = {
-  // América do Sul
-  'Brasil': '🇧🇷', 'Argentina': '🇦🇷', 'Uruguai': '🇺🇾',
-  'Colômbia': '🇨🇴', 'Equador': '🇪🇨', 'Venezuela': '🇻🇪',
-  'Paraguai': '🇵🇾', 'Chile': '🇨🇱', 'Peru': '🇵🇪', 'Bolívia': '🇧🇴',
-  // América do Norte / Central
-  'Estados Unidos': '🇺🇸', 'México': '🇲🇽', 'Canadá': '🇨🇦',
-  'Costa Rica': '🇨🇷', 'Jamaica': '🇯🇲', 'Honduras': '🇭🇳',
-  'Panamá': '🇵🇦', 'El Salvador': '🇸🇻',
-  // Europa
-  'Alemanha': '🇩🇪', 'França': '🇫🇷', 'Espanha': '🇪🇸',
-  'Portugal': '🇵🇹', 'Inglaterra': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Itália': '🇮🇹',
-  'Holanda': '🇳🇱', 'Bélgica': '🇧🇪', 'Croácia': '🇭🇷',
-  'Suíça': '🇨🇭', 'Dinamarca': '🇩🇰', 'Suécia': '🇸🇪',
-  'Noruega': '🇳🇴', 'Áustria': '🇦🇹', 'Polônia': '🇵🇱',
-  'Ucrânia': '🇺🇦', 'Sérvia': '🇷🇸', 'Hungria': '🇭🇺',
-  'Escócia': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'País de Gales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿', 'República Tcheca': '🇨🇿',
-  'Eslováquia': '🇸🇰', 'Eslovênia': '🇸🇮', 'Albânia': '🇦🇱',
-  'Geórgia': '🇬🇪', 'Turquia': '🇹🇷', 'Grécia': '🇬🇷', 'Romênia': '🇷🇴',
-  // África
-  'Marrocos': '🇲🇦', 'Senegal': '🇸🇳', 'Gana': '🇬🇭',
-  'Nigéria': '🇳🇬', 'Camarões': '🇨🇲', 'Costa do Marfim': '🇨🇮',
-  'Egito': '🇪🇬', 'Tunísia': '🇹🇳', 'Mali': '🇲🇱',
-  'África do Sul': '🇿🇦', 'Argélia': '🇩🇿', 'Angola': '🇦🇴',
-  'Guiné': '🇬🇳', 'Burkina Faso': '🇧🇫', 'Moçambique': '🇲🇿',
-  // Ásia / Oceania
-  'Japão': '🇯🇵', 'Coreia do Sul': '🇰🇷', 'Irã': '🇮🇷',
-  'Arábia Saudita': '🇸🇦', 'Austrália': '🇦🇺', 'China': '🇨🇳',
-  'Catar': '🇶🇦', 'Emirados Árabes Unidos': '🇦🇪',
-  'Uzbequistão': '🇺🇿', 'Indonésia': '🇮🇩', 'Índia': '🇮🇳',
-  'Nova Zelândia': '🇳🇿',
+  // CONMEBOL — América do Sul (6)
+  'Argentina':      'ar',
+  'Brasil':         'br',
+  'Colômbia':       'co',
+  'Equador':        'ec',
+  'Paraguai':       'py',
+  'Uruguai':        'uy',
+  // CONCACAF — América do Norte e Central (6)
+  'Canadá':         'ca',
+  'Curaçao':        'cw',
+  'Estados Unidos': 'us',
+  'Haiti':          'ht',
+  'México':         'mx',
+  'Panamá':         'pa',
+  // UEFA — Europa (16)
+  'Alemanha':               'de',
+  'Áustria':                'at',
+  'Bélgica':                'be',
+  'Bósnia e Herzegovina':   'ba',
+  'Croácia':                'hr',
+  'Escócia':                'gb-sct',
+  'Espanha':                'es',
+  'França':                 'fr',
+  'Holanda':                'nl',
+  'Inglaterra':             'gb-eng',
+  'Noruega':                'no',
+  'Portugal':               'pt',
+  'República Tcheca':       'cz',
+  'Suécia':                 'se',
+  'Suíça':                  'ch',
+  'Turquia':                'tr',
+  // CAF — África (10)
+  'África do Sul':  'za',
+  'Argélia':        'dz',
+  'Cabo Verde':     'cv',
+  'Congo DR':       'cd',
+  'Costa do Marfim':'ci',
+  'Egito':          'eg',
+  'Gana':           'gh',
+  'Marrocos':       'ma',
+  'Senegal':        'sn',
+  'Tunísia':        'tn',
+  // AFC — Ásia (9)
+  'Arábia Saudita': 'sa',
+  'Austrália':      'au',
+  'Coreia do Sul':  'kr',
+  'Iraque':         'iq',
+  'Irã':            'ir',
+  'Japão':          'jp',
+  'Jordânia':       'jo',
+  'Catar':          'qa',
+  'Uzbequistão':    'uz',
+  // OFC — Oceania (1)
+  'Nova Zelândia':  'nz',
 };
-
+ 
+const FLAG_STYLE = 'width:36px;height:27px;border-radius:4px;object-fit:cover;';
+ 
 function bandeira(pais) {
-  if (!pais) return '🏳️';
-  if (BANDEIRAS[pais]) return BANDEIRAS[pais];
-  // Fallback: busca case-insensitive
-  const lower = pais.toLowerCase();
-  for (const [k, v] of Object.entries(BANDEIRAS)) {
-    if (k.toLowerCase() === lower) return v;
+  if (!pais) return `<img src="https://flagcdn.com/w40/un.png" style="${FLAG_STYLE}" alt="">`;
+  let codigo = BANDEIRAS[pais];
+  if (!codigo) {
+    // Fallback case-insensitive
+    const lower = pais.toLowerCase();
+    for (const [k, v] of Object.entries(BANDEIRAS)) {
+      if (k.toLowerCase() === lower) { codigo = v; break; }
+    }
   }
-  return '🏳️';
+  if (!codigo) return `<img src="https://flagcdn.com/w40/un.png" style="${FLAG_STYLE}" alt="${pais}">`;
+  return `<img src="https://flagcdn.com/w40/${codigo}.png" style="${FLAG_STYLE}" alt="${pais}">`;
 }
 
 // ═══════════════════════════════════════════════════════════════
