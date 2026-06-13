@@ -552,7 +552,7 @@ async function fetchJSON(url) {
 //  RENDERIZADOR — TOP 10
 //  Campos usados: Pos, Aposta, Ptos, Pl_Exato,
 //                 Venc_PlVenc, Venc_PlPerd, Venc, Empate,
-//                 Alg_Pl, ZerouTudo, PosAnterior
+//                 Alg_Pl, ZerouTudo, PosAnterior, NumCravadasRodada
 // ═══════════════════════════════════════════════════════════════
 function renderTop10(rows) {
   if (!rows.length) return '<div class="error-state">⚠️ Nenhum dado encontrado.</div>';
@@ -576,7 +576,7 @@ function renderTop10(rows) {
     const parts = [];
     if (exato) parts.push(`${exato} placar${exato > 1 ? 'es' : ''} exato${exato > 1 ? 's' : ''}`);
     if (res)   parts.push(`${res} resultado${res > 1 ? 's' : ''} certo${res > 1 ? 's' : ''}`);
-    return parts.length ? parts.join(' · ') : 'Sem acertos nesta rodada';
+    return parts.length ? parts.join(' · ') : ${n(d.MaiorPontuacao)} ' acertos nesta rodada';
   };
 
   const top = rows.slice(0, 10);
