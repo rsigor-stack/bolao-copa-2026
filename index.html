@@ -706,6 +706,7 @@ function renderProximos(rows) {
     // Placar: considera realizado se gols1 e gols2 estiverem preenchidos
     const g1 = row.gols1;
     const g2 = row.gols2;
+    const ncrav = row.numCravadas;
     const temPlacar = g1 !== undefined && g1 !== null && g1 !== '' &&
                       g2 !== undefined && g2 !== null && g2 !== '';
 
@@ -716,8 +717,10 @@ function renderProximos(rows) {
       : `<span class="jogo-vs">×</span>`;
 
     const rodapeHtml = temPlacar
-      ? `<div class="jogo-horario">✅ Encerrado</div>`
-      : (hora ? `<div class="jogo-horario">🕐 ${hora} (Brasília)</div>` : '');
+        ? `<div class="jogo-horario">✅ Encerrado <br>${ncrav} acerto${ncrav !== 1 ? 's' : ''}</div>`
+        : (hora
+            ? `<div class="jogo-horario">🕐 ${hora} (Brasília)</div>`
+            : '');
 
     return `
       <div class="jogo-card${temPlacar ? ' jogo-encerrado' : ''}">
