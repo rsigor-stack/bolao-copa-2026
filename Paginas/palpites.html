@@ -450,41 +450,41 @@ const COLS_POR_PARTICIPANTE = 3;
 function parsearDados(rows) {
   if (!rows.length) return { participantes: [], jogos: [] };
 
-  const cabecalho = rows[0];
+  // Detecta participantes pelas chaves que terminam em _pal1
+  const chaves = Object.keys(rows[0]);
+  const participantes = chaves
+    .filter(k => k.endsWith('_pal1'))
+    .map(k => k.replace('_pal1', ''));
 
-  // Extrai participantes (cabeçalho da 1ª coluna de cada grupo de 3)
-  const participantes = [];
-  for (let c = COLS_FIXAS; c < cabecalho.length; c += COLS_POR_PARTICIPANTE) {
-    const nome = String(cabecalho[c] || '').trim();
-    if (nome) participantes.push({ nome, colIdx: c });
-  }
+  if (!participantes.length) return { participantes: [], jogos: [] };
 
-  // Extrai jogos (linhas 1 em diante, ignorando vazias)
-  const jogos = [];
-  for (let i = 1; i < rows.length; i++) {
-    const r = rows[i];
-    const time1 = String(r[2] || '').trim();
-    const time2 = String(r[3] || '').trim();
-    if (!time1 && !time2) continue; // linha vazia
+  // Valor vazio → null
+  const val = v => (v === '' || v === null || v === undefined || v === '-') ? null : v;
 
-    jogos.push({
-      data:       String(r[0] || '').trim(),
-      horario:    String(r[1] || '').trim(),
+  const jogos = rows.map(r => {
+    const time1 = String(r.Time1 || '').trim();
+    const time2 = String(r.Time2 || '').trim();
+    if (!time1 && !time2) return null;
+
+    return {
+      data:      String(r.Data    || '').trim(),
+      horario:   String(r.Hora    || '').trim(),
       time1,
       time2,
-      gols1Real:  r[4] !== '' && r[4] !== null && r[4] !== undefined ? r[4] : null,
-      gols2Real:  r[5] !== '' && r[5] !== null && r[5] !== undefined ? r[5] : null,
-      palpites: participantes.map(p => ({
-        nome:    p.nome,
-        gols1:   r[p.colIdx]     !== '' && r[p.colIdx]     !== null ? r[p.colIdx]     : null,
-        gols2:   r[p.colIdx + 1] !== '' && r[p.colIdx + 1] !== null ? r[p.colIdx + 1] : null,
-        pontos:  r[p.colIdx + 2] !== '' && r[p.colIdx + 2] !== null ? r[p.colIdx + 2] : null,
+      gols1Real: val(r.Real1),
+      gols2Real: val(r.Real2),
+      palpites:  participantes.map(nome => ({
+        nome,
+        gols1:  val(r[`${nome}_pal1`]),
+        gols2:  val(r[`${nome}_pal2`]),
+        pontos: val(r[`${nome}_pts`]),
       })),
-    });
-  }
+    };
+  }).filter(Boolean);
 
-  return { participantes, jogos };
+  return { participantes: participantes.map(nome => ({ nome })), jogos };
 }
+
   
 // ═══════════════════════════════════════════════════════════════
 //  CLASSE CSS DOS PONTOS
