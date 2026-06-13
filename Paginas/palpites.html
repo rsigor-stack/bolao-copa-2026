@@ -485,11 +485,6 @@ function parsearDados(rows) {
 
   return { participantes, jogos };
 }
-
-const { participantes, jogos } = parsearDados(json.data);
-console.log('CABEÇALHO:', JSON.stringify(json.data[0]));
-console.log('LINHA 1:', JSON.stringify(json.data[1]));
-console.log('Participantes encontrados:', participantes.map(p => p.nome));
   
 // ═══════════════════════════════════════════════════════════════
 //  CLASSE CSS DOS PONTOS
@@ -621,6 +616,10 @@ async function init() {
 
     const { participantes, jogos } = parsearDados(json.data);
 
+    console.log('CABEÇALHO:', JSON.stringify(json.data[0]));
+    console.log('LINHA 1:', JSON.stringify(json.data[1]));
+    console.log('Participantes encontrados:', participantes.map(p => p.nome));
+    
     if (!participantes.length) throw new Error('Nenhum participante encontrado.');
 
     document.getElementById('loading-state').style.display = 'none';
