@@ -602,7 +602,7 @@ function renderTop10(rows) {
 //                 MaisAcertos, Participante_MaisAcertos,
 //                 MaiorSubida, Participante_MaiorSubida,
 //                 MaiorQueda, Participante_MaiorQueda,
-//                 NumJogosRodada, NumAcertosExatos
+//                 NumJogosRodada, NumAcertosExatos, NumJogosFinalizados
 // ═══════════════════════════════════════════════════════════════
 function renderDestaques(rows) {
   if (!rows.length) return '<div class="error-state">⚠️ Nenhum dado encontrado.</div>';
@@ -655,17 +655,15 @@ function renderDestaques(rows) {
         <div class="resumo-grid">
           <div class="resumo-item">
             <div class="resumo-valor">${n(d.NumJogosRodada)}</div>
-            <div class="resumo-label">Jogos realizados</div>
+            <div class="resumo-label">Jogos</div>
+          </div>
+          <div class="resumo-item">
+            <div class="resumo-valor">${n(d.NumJogosFinalizados)}</div>
+            <div class="resumo-label">Jogos finalizados</div>
           </div>
           <div class="resumo-item">
             <div class="resumo-valor" style="color:var(--accent-2);">${n(d.NumAcertosExatos)}</div>
             <div class="resumo-label">Acertos exatos</div>
-          </div>
-          <div class="resumo-item">
-            <div class="resumo-valor" style="color:var(--gold);">
-              ${d.PercentAtivos !== undefined ? d.PercentAtivos + '%' : '—'}
-            </div>
-            <div class="resumo-label">Participantes ativos</div>
           </div>
         </div>
       </div>
