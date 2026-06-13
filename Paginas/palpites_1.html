@@ -120,29 +120,111 @@
       text-transform: uppercase; letter-spacing: 1px;
       opacity: .6; margin-bottom: 14px;
     }
-    .participantes-grid {
-      display: flex; flex-wrap: wrap; gap: 10px;
+
+    /* Campo de busca */
+    .busca-wrap {
+      position: relative;
+      max-width: 480px;
     }
-    .btn-participante {
-      padding: 10px 18px;
-      border-radius: 999px;
+    .busca-icon {
+      position: absolute; left: 16px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem; opacity: .5; pointer-events: none;
+    }
+    .busca-input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      border-radius: 16px;
       border: 1px solid rgba(255,255,255,.15);
-      background: rgba(255,255,255,.06);
-      color: white; font-family: 'Montserrat', sans-serif;
-      font-size: .88rem; font-weight: 600;
-      cursor: pointer; transition: .2s ease;
+      background: rgba(255,255,255,.07);
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .95rem; font-weight: 500;
+      outline: none; transition: .2s ease;
     }
-    .btn-participante:hover {
-      background: rgba(255,255,255,.12);
-      border-color: rgba(255,255,255,.3);
-      transform: translateY(-2px);
+    .busca-input::placeholder { color: rgba(255,255,255,.35); }
+    .busca-input:focus {
+      border-color: rgba(0,212,255,.5);
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 0 0 3px rgba(0,212,255,.1);
     }
-    .btn-participante.ativo {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-color: transparent;
-      color: #04142d;
-      box-shadow: 0 6px 20px rgba(0,212,255,.3);
+    .busca-clear {
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; color: rgba(255,255,255,.4);
+      font-size: 1.1rem; cursor: pointer; padding: 4px;
+      display: none; line-height: 1;
     }
+    .busca-clear.visivel { display: block; }
+    .busca-clear:hover { color: white; }
+
+    /* Lista de resultados */
+    .lista-participantes {
+      margin-top: 10px;
+      max-width: 480px;
+      background: rgba(10,25,60,.95);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      overflow: hidden;
+      display: none;
+      box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    }
+    .lista-participantes.visivel { display: block; }
+    .lista-scroll { max-height: 280px; overflow-y: auto; }
+    .lista-scroll::-webkit-scrollbar { width: 5px; }
+    .lista-scroll::-webkit-scrollbar-track { background: transparent; }
+    .lista-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 99px; }
+
+    .lista-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 18px;
+      cursor: pointer;
+      transition: background .15s;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      font-size: .92rem; font-weight: 500;
+    }
+    .lista-item:last-child { border-bottom: none; }
+    .lista-item:hover, .lista-item.ativo {
+      background: rgba(0,212,255,.12);
+    }
+    .lista-item.ativo { color: var(--accent); font-weight: 700; }
+    .lista-item .pos-badge {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: .72rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; opacity: .6;
+    }
+    .lista-item .item-nome { flex: 1; }
+    .lista-item .item-seta { opacity: .3; font-size: .8rem; }
+    .lista-item:hover .item-seta, .lista-item.ativo .item-seta { opacity: .8; }
+
+    .lista-vazia {
+      padding: 24px; text-align: center;
+      opacity: .5; font-size: .88rem;
+    }
+
+    /* Participante selecionado (chip) */
+    .selecionado-chip {
+      display: none;
+      align-items: center; gap: 10px;
+      margin-top: 14px;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, rgba(0,212,255,.15), rgba(8,247,161,.10));
+      border: 1px solid rgba(0,212,255,.25);
+      border-radius: 999px;
+      max-width: fit-content;
+      font-size: .9rem; font-weight: 700;
+      color: var(--accent);
+    }
+    .selecionado-chip.visivel { display: flex; }
+    .selecionado-chip button {
+      background: none; border: none; color: var(--accent);
+      cursor: pointer; font-size: 1rem; padding: 0; line-height: 1;
+      opacity: .6;
+    }
+    .selecionado-chip button:hover { opacity: 1; }
 
     /* ── RESUMO DO PARTICIPANTE ── */
     .resumo-participante {
@@ -351,7 +433,25 @@
     <!-- Seletor de participante -->
     <div class="selector-card">
       <div class="selector-label">👤 Selecione o participante</div>
-      <div class="participantes-grid" id="participantes-grid"></div>
+      <div class="busca-wrap">
+        <span class="busca-icon">🔍</span>
+        <input
+          type="text"
+          id="busca-input"
+          class="busca-input"
+          placeholder="Digite o nome para buscar…"
+          autocomplete="off"
+        >
+        <button class="busca-clear" id="busca-clear" title="Limpar">✕</button>
+      </div>
+      <div class="lista-participantes" id="lista-participantes">
+        <div class="lista-scroll" id="lista-scroll"></div>
+      </div>
+      <div class="selecionado-chip" id="selecionado-chip">
+        <span>✓</span>
+        <span id="chip-nome"></span>
+        <button id="chip-trocar" title="Trocar participante">✕</button>
+      </div>
     </div>
 
     <!-- Resumo do participante selecionado -->
@@ -408,9 +508,9 @@
 // ═══════════════════════════════════════════════════════════════
 //  CONFIGURAÇÃO — cole a URL do JSON da aba Palpites
 // ═══════════════════════════════════════════════════════════════
-const URL_PALPITES = 'https://script.google.com/macros/s/AKfycbw3S0FDdjMZbP0mnyQ4iMDHufuN6QTBtNXcWWpOmCkfqnPHQWiUv15Z0uxagpseoibe/exec?aba=Palpites';
+const URL_PALPITES = 'URL_JSON_PALPITES_AQUI';
 
-  // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
 //  DICIONÁRIO DE BANDEIRAS — 48 países da Copa 2026
 // ═══════════════════════════════════════════════════════════════
 const BANDEIRAS = {
@@ -578,23 +678,113 @@ function renderTabela(participante, jogos) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  RENDERIZA OS BOTÕES DE PARTICIPANTE
+//  SELETOR COM BUSCA
 // ═══════════════════════════════════════════════════════════════
 function renderSeletor(participantes, jogos) {
-  const grid = document.getElementById('participantes-grid');
-  grid.innerHTML = '';
+  const input       = document.getElementById('busca-input');
+  const clearBtn    = document.getElementById('busca-clear');
+  const lista       = document.getElementById('lista-participantes');
+  const scroll      = document.getElementById('lista-scroll');
+  const chip        = document.getElementById('selecionado-chip');
+  const chipNome    = document.getElementById('chip-nome');
+  const chipTrocar  = document.getElementById('chip-trocar');
 
-  participantes.forEach(p => {
-    const btn = document.createElement('button');
-    btn.className    = 'btn-participante';
-    btn.textContent  = p.nome;
-    btn.addEventListener('click', () => {
-      // Remove ativo de todos
-      grid.querySelectorAll('.btn-participante').forEach(b => b.classList.remove('ativo'));
-      btn.classList.add('ativo');
-      renderTabela(p.nome, jogos);
-    });
-    grid.appendChild(btn);
+  let selecionado = null;
+
+  // Renderiza os itens filtrados na lista
+  function renderLista(filtro) {
+    const termo = (filtro || '').toLowerCase().trim();
+    const filtrados = participantes.filter(p =>
+      !termo || p.nome.toLowerCase().includes(termo)
+    );
+
+    if (!filtrados.length) {
+      scroll.innerHTML = `<div class="lista-vazia">Nenhum participante encontrado</div>`;
+    } else {
+      scroll.innerHTML = filtrados.map((p, i) => `
+        <div class="lista-item${selecionado === p.nome ? ' ativo' : ''}"
+             data-nome="${p.nome}" tabindex="0">
+          <span class="pos-badge">${participantes.indexOf(p) + 1}</span>
+          <span class="item-nome">${p.nome}</span>
+          <span class="item-seta">›</span>
+        </div>`).join('');
+
+      // Eventos dos itens
+      scroll.querySelectorAll('.lista-item').forEach(item => {
+        item.addEventListener('click', () => selecionar(item.dataset.nome));
+        item.addEventListener('keydown', e => {
+          if (e.key === 'Enter') selecionar(item.dataset.nome);
+        });
+      });
+    }
+  }
+
+  // Seleciona um participante
+  function selecionar(nome) {
+    selecionado = nome;
+
+    // Atualiza chip
+    chipNome.textContent = nome;
+    chip.classList.add('visivel');
+
+    // Esconde lista e limpa busca
+    lista.classList.remove('visivel');
+    input.value = '';
+    clearBtn.classList.remove('visivel');
+    input.blur();
+
+    renderTabela(nome, jogos);
+  }
+
+  // Abre a lista mostrando todos ao focar no campo
+  input.addEventListener('focus', () => {
+    renderLista(input.value);
+    lista.classList.add('visivel');
+  });
+
+  // Filtra conforme digita
+  input.addEventListener('input', () => {
+    clearBtn.classList.toggle('visivel', input.value.length > 0);
+    renderLista(input.value);
+    lista.classList.add('visivel');
+  });
+
+  // Limpa o campo
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    clearBtn.classList.remove('visivel');
+    renderLista('');
+    input.focus();
+  });
+
+  // Trocar participante: reabre o campo de busca
+  chipTrocar.addEventListener('click', () => {
+    chip.classList.remove('visivel');
+    input.value = '';
+    clearBtn.classList.remove('visivel');
+    renderLista('');
+    lista.classList.add('visivel');
+    input.focus();
+  });
+
+  // Fecha a lista ao clicar fora
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.busca-wrap') && !e.target.closest('.lista-participantes')) {
+      lista.classList.remove('visivel');
+    }
+  });
+
+  // Navegação por teclado (↑ ↓ Esc)
+  input.addEventListener('keydown', e => {
+    const itens = scroll.querySelectorAll('.lista-item');
+    const ativo = scroll.querySelector('.lista-item:focus');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      (ativo ? ativo.nextElementSibling : itens[0])?.focus();
+    } else if (e.key === 'Escape') {
+      lista.classList.remove('visivel');
+      input.blur();
+    }
   });
 }
 
