@@ -351,7 +351,7 @@
 <div class="page-wrapper">
 
   <div class="page-title">
-    <h3>⚔️ Confronto de Palpites</h3>
+    <h2>⚔️ Confronto de Palpites</h2>
     <p>Selecione um jogo para comparar os palpites de todos os participantes</p>
   </div>
 
@@ -420,6 +420,7 @@
 // ═══════════════════════════════════════════════════════════════
 const URL_PALPITES     = 'https://script.google.com/macros/s/AKfycbw3S0FDdjMZbP0mnyQ4iMDHufuN6QTBtNXcWWpOmCkfqnPHQWiUv15Z0uxagpseoibe/exec?aba=Palpites';
 const URL_PROX_JOGOS   = 'https://script.google.com/macros/s/AKfycbyr_jCKmx6ij0fytIqNjK4evsorDQtxdp4bcvnJ4RQMvU6TTK9zwJZZXjm__p3uyKI/exec?aba=ProxJogos';
+const URL_RANKING      = 'https://script.google.com/macros/s/AKfycbztMaYq2BlP3RMu_3wplQ3E7aVbNTs00QnBK62D71Ft3MsQmfS_MUZK1g7RIBlSFEh8/exec';
 
 // ═══════════════════════════════════════════════════════════════
 //  DICIONÁRIOS
@@ -524,7 +525,7 @@ function posClasse(i) {
 // ═══════════════════════════════════════════════════════════════
 //  RENDERIZA LISTA DE JOGOS
 // ═══════════════════════════════════════════════════════════════
-function renderJogos(proxJogos, jogoPalpites, jogoSelecionadoIdx) {
+function renderJogos(proxJogos, jogoPalpites, jogoSelecionadoIdx, rankingMap) {
   const lista = document.getElementById('jogos-lista');
   document.getElementById('badge-jogos').textContent = `${proxJogos.length} jogos`;
 
@@ -561,7 +562,7 @@ function renderJogos(proxJogos, jogoPalpites, jogoSelecionadoIdx) {
       lista.querySelectorAll('.jogo-btn').forEach(b => b.classList.remove('ativo'));
       btn.classList.add('ativo');
       const idx = parseInt(btn.dataset.idx);
-      renderConfronto(proxJogos[idx], jogoPalpites);
+      renderConfronto(proxJogos[idx], jogoPalpites, rankingMap);
       btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
@@ -569,8 +570,9 @@ function renderJogos(proxJogos, jogoPalpites, jogoSelecionadoIdx) {
 
 // ═══════════════════════════════════════════════════════════════
 //  RENDERIZA PLACAR EM DESTAQUE + TABELA
+//  rankingMap: Map<nome, posição> com o ranking atual do bolão
 // ═══════════════════════════════════════════════════════════════
-function renderConfronto(jogo, jogoPalpites) {
+function renderConfronto(jogo, jogoPalpites, rankingMap) {
   // Mostra card do jogo
   const cardDest = document.getElementById('card-jogo-dest');
   cardDest.style.display = 'block';
@@ -619,14 +621,23 @@ function renderConfronto(jogo, jogoPalpites) {
     return;
   }
 
-  // Ordena por pontuação decrescente (nulos por último)
-  const palpitesOrdenados = [...jogoPalp.palpites].sort((a, b) => {
-    const pa = a.pontos !== null ? Number(a.pontos) : -1;
-    const pb = b.pontos !== null ? Number(b.pontos) : -1;
-    return pb - pa;
-  });
-
   const temResultado = jogoPalp.gols1Real !== null && jogoPalp.gols2Real !== null;
+
+  // Ordenação:
+  // - Jogo finalizado → por pontuação decrescente (quem acertou mais aparece primeiro)
+  // - Jogo pendente   → pela posição atual no ranking do bolão (menor Pos = primeiro)
+  const POS_FALLBACK = 9999; // participantes sem posição no ranking vão para o final
+  const palpitesOrdenados = [...jogoPalp.palpites].sort((a, b) => {
+    if (temResultado) {
+      const pa = a.pontos !== null ? Number(a.pontos) : -1;
+      const pb = b.pontos !== null ? Number(b.pontos) : -1;
+      return pb - pa;
+    } else {
+      const ra = rankingMap.get(a.nome) ?? POS_FALLBACK;
+      const rb = rankingMap.get(b.nome) ?? POS_FALLBACK;
+      return ra - rb;
+    }
+  });
 
   const linhas = palpitesOrdenados.map((p, i) => {
     const temPalpite = p.gols1 !== null && p.gols2 !== null;
@@ -636,6 +647,13 @@ function renderConfronto(jogo, jogoPalpites) {
     const exato = temResultado && temPalpite &&
       String(p.gols1) === String(jogoPalp.gols1Real) &&
       String(p.gols2) === String(jogoPalp.gols2Real);
+
+    // Posição exibida: no jogo finalizado usa rank da tabela; no pendente usa rank do bolão
+    const posExibida = temResultado
+      ? i + 1
+      : (rankingMap.get(p.nome) ?? '—');
+
+    const poscls = temResultado ? posClasse(i) : 'pos-n';
 
     const palpiteHtml = temPalpite
       ? `<span class="palpite-val">${p.gols1} × ${p.gols2}</span>${exato ? '<span class="exato-icon">🎯</span>' : ''}`
@@ -651,7 +669,7 @@ function renderConfronto(jogo, jogoPalpites) {
       <tr${destaqueRow}>
         <td class="col-part">
           <div class="part-info">
-            <span class="part-pos ${posClasse(i)}">${i + 1}</span>
+            <span class="part-pos ${posclsAlias(posExibida, temResultado, i)}">${posExibida}</span>
             <span class="part-nome">${p.nome}</span>
           </div>
         </td>
@@ -662,9 +680,19 @@ function renderConfronto(jogo, jogoPalpites) {
 
   document.getElementById('tabela-body').innerHTML = linhas;
   document.getElementById('badge-tabela').textContent =
-    `${palpitesOrdenados.length} participantes`;
+    `${palpitesOrdenados.length} participantes · ${temResultado ? 'ordem por pontuação' : 'ordem pelo ranking'}`;
 
   tabCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Classe do badge de posição conforme contexto
+function posclsAlias(posExibida, temResultado, i) {
+  if (temResultado) return posClasse(i);
+  const n = Number(posExibida);
+  if (n === 1) return 'pos-1';
+  if (n === 2) return 'pos-2';
+  if (n === 3) return 'pos-3';
+  return 'pos-n';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -672,9 +700,10 @@ function renderConfronto(jogo, jogoPalpites) {
 // ═══════════════════════════════════════════════════════════════
 async function init() {
   try {
-    const [rawProx, rawPalp] = await Promise.all([
+    const [rawProx, rawPalp, rawRanking] = await Promise.all([
       fetchJSON(URL_PROX_JOGOS),
       fetchJSON(URL_PALPITES),
+      fetchJSON(URL_RANKING),
     ]);
 
     // Parseia próximos jogos
@@ -692,23 +721,32 @@ async function init() {
     // Parseia palpites
     const { jogos: jogoPalpites } = parsearPalpites(rawPalp);
 
+    // Monta mapa nome → posição a partir do ranking completo
+    // Campo de nome: tenta Aposta, depois Nome
+    const rankingMap = new Map();
+    rawRanking.forEach(r => {
+      const nome = String(r.Aposta || r.Nome || '').trim();
+      const pos  = parseInt(r.Pos);
+      if (nome && !isNaN(pos)) rankingMap.set(nome, pos);
+    });
+
     if (!proxJogos.length) throw new Error('Nenhum jogo encontrado em ProxJogos.');
 
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('conteudo').style.display = 'block';
 
     // Lê parâmetro ?jogo=N da URL
-    const params   = new URLSearchParams(window.location.search);
+    const params    = new URLSearchParams(window.location.search);
     const jogoParam = params.get('jogo');
-    const jogoIdx  = jogoParam !== null ? parseInt(jogoParam) : -1;
+    const jogoIdx   = jogoParam !== null ? parseInt(jogoParam) : -1;
     const idxValido = jogoIdx >= 0 && jogoIdx < proxJogos.length ? jogoIdx : -1;
 
     // Renderiza lista de jogos com o botão correto já destacado
-    renderJogos(proxJogos, jogoPalpites, idxValido);
+    renderJogos(proxJogos, jogoPalpites, idxValido, rankingMap);
 
     // Se veio com jogo pré-selecionado, abre automaticamente a tabela
     if (idxValido >= 0) {
-      renderConfronto(proxJogos[idxValido], jogoPalpites);
+      renderConfronto(proxJogos[idxValido], jogoPalpites, rankingMap);
 
       // Aguarda o DOM renderizar os botões antes de rolar
       setTimeout(() => {
