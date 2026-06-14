@@ -351,7 +351,7 @@
 <div class="page-wrapper">
 
   <div class="page-title">
-    <h2>⚔️ Confronto de Palpites</h2>
+    <h3>⚔️ Confronto de Palpites</h3>
     <p>Selecione um jogo para comparar os palpites de todos os participantes</p>
   </div>
 
@@ -697,7 +697,25 @@ async function init() {
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('conteudo').style.display = 'block';
 
-    renderJogos(proxJogos, jogoPalpites, -1);
+    // Lê parâmetro ?jogo=N da URL
+    const params   = new URLSearchParams(window.location.search);
+    const jogoParam = params.get('jogo');
+    const jogoIdx  = jogoParam !== null ? parseInt(jogoParam) : -1;
+    const idxValido = jogoIdx >= 0 && jogoIdx < proxJogos.length ? jogoIdx : -1;
+
+    // Renderiza lista de jogos com o botão correto já destacado
+    renderJogos(proxJogos, jogoPalpites, idxValido);
+
+    // Se veio com jogo pré-selecionado, abre automaticamente a tabela
+    if (idxValido >= 0) {
+      renderConfronto(proxJogos[idxValido], jogoPalpites);
+
+      // Aguarda o DOM renderizar os botões antes de rolar
+      setTimeout(() => {
+        const btn = document.querySelector(`.jogo-btn[data-idx="${idxValido}"]`);
+        if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 150);
+    }
 
   } catch (e) {
     document.getElementById('loading-state').innerHTML =
