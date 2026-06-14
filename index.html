@@ -188,6 +188,19 @@
     }
     .ranking-item:hover { background: rgba(255,255,255,.05); }
 
+    /* Link que envolve o item do ranking */
+    .ranking-item-link {
+      display: flex; align-items: center; gap: 14px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .ranking-item:has(.ranking-item-link):hover {
+      background: rgba(255,255,255,.05);
+      cursor: pointer;
+    }
+    .ranking-item-link:hover .rank-name {
+      color: var(--accent);
+    }
+
     .rank-pos {
       width: 32px; height: 32px;
       border-radius: 50%;
@@ -312,6 +325,43 @@
       opacity: .85;
     }
 
+    /* Link que envolve o card */
+    .jogo-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .jogo-card-link .jogo-card {
+      cursor: pointer;
+    }
+    .jogo-card-link:hover .jogo-card {
+      transform: translateY(-3px);
+      border-color: rgba(0,212,255,.4);
+      box-shadow: 0 12px 32px rgba(0,212,255,.15);
+    }
+
+    /* Hint "Ver palpites" no rodapé do card */
+    .jogo-link-hint {
+      text-align: center;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(0,212,255,.15);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      transition: opacity .2s ease;
+    }
+    .jogo-card-link:hover .jogo-link-hint {
+      opacity: 1;
+    }
+    /* Em mobile o hint fica sempre visível (sem hover) */
+    @media (hover: none) {
+      .jogo-link-hint { opacity: .6; }
+    }
+
     .jogo-horario {
       display: flex;
       align-items: center;
@@ -388,8 +438,9 @@
   </div>
   <nav>
     <a href="#" onclick="window.location.href='https://sejoganacopa.vercel.app/'; return false;">  🏠 Home </a>
+	<a href="#" onclick="window.location.href='https://sejoganacopa.vercel.app/Paginas/ranking.html'; return false;"> 📊 Ranking Geral </a>
 	<a href="#" onclick="window.location.href='https://sejoganacopa.vercel.app/Paginas/palpites_3.html'; return false;"> 🎯 Palpites </a>
-    <a href="#" onclick="window.location.href='https://sejoganacopa.vercel.app/Paginas/ranking.html'; return false;"> 📊 Ranking Geral </a>
+    <a href="#" onclick="window.location.href='https://sejoganacopa.vercel.app/Paginas/confronto.html'; return false;"> ⚔️ Secador</a>
     <a href="https://drive.google.com/uc?export=download&id=18KAjbenZAbscrTi79QvTMVxT1coHtBYc" target="_blank">⬇️ Regulamento</a>
     <a href="https://drive.google.com/uc?export=download&id=1DCx8z7_M_7dbO9OuPWeOwjx76ElDD4Am" target="_blank">⬇️ ZIP Palpites</a>
   </nav>
@@ -584,16 +635,22 @@ function renderTop10(rows) {
   const top = rows.slice(0, 10);
   document.getElementById('badge-top10').textContent = `Top ${top.length}`;
 
-  const items = top.map(row => `
+  const items = top.map(row => {
+    const nome = row.Aposta || '—';
+    const link = `Paginas/palpites_4.html?participante=${encodeURIComponent(nome)}`;
+    return `
     <li class="ranking-item">
-      <div class="rank-pos ${posClasse(row.Pos)}">${row.Pos}</div>
-      <div class="rank-info">
-        <div class="rank-name">${row.Aposta || '—'}</div>
-        <div class="rank-sub">${sub(row)}</div>
-      </div>
-      <div class="rank-pts">${row.Ptos ?? '0'} <span>pts</span></div>
-      ${delta(row)}
-    </li>`).join('');
+      <a href="${link}" class="ranking-item-link" title="Ver palpites de ${nome}">
+        <div class="rank-pos ${posClasse(row.Pos)}">${row.Pos}</div>
+        <div class="rank-info">
+          <div class="rank-name">${nome}</div>
+          <div class="rank-sub">${sub(row)}</div>
+        </div>
+        <div class="rank-pts">${row.Ptos ?? '0'} <span>pts</span></div>
+        ${delta(row)}
+      </a>
+    </li>`;
+  }).join('');
 
   return `<ul class="ranking-list">${items}</ul>`;
 }
@@ -693,7 +750,7 @@ function renderProximos(rows) {
   document.getElementById('badge-proximos').textContent =
     `${rows.length} jogo${rows.length !== 1 ? 's' : ''}`;
 
-  const cards = rows.map(row => {
+  const cards = rows.map((row, idx) => {
     const t1     = row.time1   || '';
     const t2     = row.time2   || '';
     const grupo  = row.grupo   || '';
@@ -721,25 +778,30 @@ function renderProximos(rows) {
             ? `<div class="jogo-horario">🕐 ${hora} (Brasília)</div>`
             : '');
 
+    const linkConfronto = `Paginas/confronto.html?jogo=${idx}`;
+
     return `
-      <div class="jogo-card${temPlacar ? ' jogo-encerrado' : ''}">
-        <div class="jogo-meta">
-          <span>${etiqueta}</span>
-          <span class="jogo-data">${data}${rodada ? ' · ' + rodada : ''}</span>
-        </div>
-        <div class="jogo-times">
-          <div class="jogo-time">
-            <span class="jogo-bandeira">${bandeira(t1)}</span>
-            <span class="jogo-nome">${t1}</span>
+      <a href="${linkConfronto}" class="jogo-card-link">
+        <div class="jogo-card${temPlacar ? ' jogo-encerrado' : ''}">
+          <div class="jogo-meta">
+            <span>${etiqueta}</span>
+            <span class="jogo-data">${data}${rodada ? ' · ' + rodada : ''}</span>
           </div>
-          ${placarHtml}
-          <div class="jogo-time">
-            <span class="jogo-bandeira">${bandeira(t2)}</span>
-            <span class="jogo-nome">${t2}</span>
+          <div class="jogo-times">
+            <div class="jogo-time">
+              <span class="jogo-bandeira">${bandeira(t1)}</span>
+              <span class="jogo-nome">${t1}</span>
+            </div>
+            ${placarHtml}
+            <div class="jogo-time">
+              <span class="jogo-bandeira">${bandeira(t2)}</span>
+              <span class="jogo-nome">${t2}</span>
+            </div>
           </div>
+          ${rodapeHtml}
+          <div class="jogo-link-hint">⚔️ Ver palpites</div>
         </div>
-        ${rodapeHtml}
-      </div>`;
+      </a>`;
   }).join('');
 
   return `<div class="jogos-grid">${cards}</div>`;
