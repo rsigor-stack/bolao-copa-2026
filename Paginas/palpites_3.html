@@ -832,6 +832,25 @@ async function init() {
 
     renderSeletor(participantes, jogos);
 
+    // Pré-seleciona participante se vier via ?participante=Nome na URL
+    const params = new URLSearchParams(window.location.search);
+    const nomeParam = params.get('participante');
+    if (nomeParam) {
+      // Busca correspondência exata ou case-insensitive
+      const encontrado = participantes.find(p =>
+        p.nome === nomeParam ||
+        p.nome.toLowerCase() === nomeParam.toLowerCase()
+      );
+      if (encontrado) {
+        // Simula seleção: atualiza chip e abre tabela
+        const chip      = document.getElementById('selecionado-chip');
+        const chipNome  = document.getElementById('chip-nome');
+        chipNome.textContent = encontrado.nome;
+        chip.classList.add('visivel');
+        renderTabela(encontrado.nome, jogos);
+      }
+    }
+
   } catch (e) {
     document.getElementById('loading-state').innerHTML =
       `<div class="error-state">❌ Erro ao carregar palpites.<br><small>${e.message}</small></div>`;
