@@ -841,11 +841,6 @@ async function renderCravadas(fase) {
       solo:   String(r.seSolo || '').trim(),
     }));
 
-  // DIAGNÓSTICO TEMPORÁRIO — remover após confirmar a causa
-  console.log('Colunas disponíveis na 1ª linha:', Object.keys(dados[0] || {}));
-  console.log('Jogos com num===1:', jogos.filter(j => j.num === 1));
-  console.log('Jogos com num===1 E solo preenchido:', jogos.filter(j => j.num === 1 && j.solo));
-
   document.getElementById('cat-badge').textContent = `${jogos.length} jogo${jogos.length !== 1 ? 's' : ''}`;
 
   if (!jogos.length) {
