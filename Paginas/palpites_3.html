@@ -642,7 +642,7 @@ function renderTabela(participante, jogos) {
 
     const temReal    = jogo.gols1Real !== null && jogo.gols2Real !== null;
     const temPalpite = p.gols1 !== null && p.gols2 !== null;
-    const temPontos  = p.pontos !== null && p.pontos !== '';
+    const temPontos  = p.pontos !== null && p.pontos !== '' && Number(p.pontos) !== 0;;
 
     if (temPontos) {
       totalPts += Number(p.pontos);
