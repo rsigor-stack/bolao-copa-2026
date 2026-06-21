@@ -642,11 +642,11 @@ function renderTabela(participante, jogos) {
 
     const temReal    = jogo.gols1Real !== null && jogo.gols2Real !== null;
     const temPalpite = p.gols1 !== null && p.gols2 !== null;
-    const temPontos  = p.pontos !== null && p.pontos !== '' && Number(p.pontos) !== 0;;
+    const temPontos  = p.pontos !== null && p.pontos !== '';
 
     if (temPontos) {
       totalPts += Number(p.pontos);
-      pontuados++;
+      pontuados = pontuados + (Number(p.pontos) == 0 ? 0 : 1 );
       // Placar exato: palpite igual ao resultado
       if (temReal && temPalpite &&
           String(p.gols1) === String(jogo.gols1Real) &&
