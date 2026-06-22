@@ -304,11 +304,39 @@
       min-width: 38px;
       text-align: center;
     }
-    .cravada-placar {
-      font-size: 1.15rem; font-weight: 800; color: var(--gold);
-      letter-spacing: 1px; white-space: nowrap; padding: 0 4px;
+    .unico-time {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-width: 55px;
+    }
+    .unico-time img {
+      width: 38px !important;
+      height: 28px !important;
+      border-radius: 4px;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .unico-time .cravada-time-nome {
+      min-width: auto;
+      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      line-height: 1;
     }
 
+    .cravada-placar {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--gold);
+      min-width: 90px;
+      text-align: center;
+      letter-spacing: 1px; 
+      white-space: nowrap; 
+      padding: 0 4px;
+    }
+  
     .cravada-info {
       display: flex; align-items: center; gap: 10px; flex-shrink: 0;
     }
@@ -933,9 +961,21 @@ async function renderCravadas(fase) {
             <div class="unico-sub">foi o único a cravar esse placar</div>
             <br>
             <div class="unico-jogo">
-              <div class="cravada-time">${t1Img}<span class="cravada-time-nome">${tri(j.time1)}</span></div>
-              <span class="cravada-placar">${j.gols1} × ${j.gols2}</span>
-              <div class="cravada-time">${t2Img}<span class="cravada-time-nome">${tri(j.time2)}</span></div>
+            
+              <div class="unico-time">
+                ${flagImgHtml(j.time1,38,28,4)}
+                <span class="cravada-time-nome">${tri(j.time1)}</span>
+              </div>
+            
+              <span class="cravada-placar">
+                ${j.gols1} × ${j.gols2}
+              </span>
+            
+              <div class="unico-time">
+                ${flagImgHtml(j.time2,38,28,4)}
+                <span class="cravada-time-nome">${tri(j.time2)}</span>
+              </div>
+            
             </div>
           </div>`;
       }).join('')}
