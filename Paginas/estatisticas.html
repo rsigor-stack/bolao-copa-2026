@@ -689,6 +689,11 @@ const TRIGRAMAS = {
 function tri(nome){
   return TRIGRAMAS[nome] || nome;
 }
+
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
 function flagUrl(nome) {
   const cod = BANDEIRAS[nome];
   return cod ? `https://flagcdn.com/w40/${cod}.png` : null;
@@ -1103,11 +1108,7 @@ async function renderDesempenho(fase) {
     return;
   }
 
-  //Detecta se é Smart Phone
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }  
-  
+
   // Extrai pares (participante, vezes) a partir das colunas configuradas na fase
   const lista = dados
     .map(r => ({
