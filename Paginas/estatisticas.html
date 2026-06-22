@@ -869,13 +869,13 @@ async function renderCravadas(fase) {
         return `
           <div class="unico-card">
             <div class="unico-emoji">🧠</div>
+            <div class="unico-nome">${j.solo}</div>
+            <div class="unico-sub">foi o único a cravar esse placar</div>
             <div class="unico-jogo">
               <div class="cravada-time">${t1Img}<span class="cravada-time-nome">${j.time1}</span></div>
               <span class="cravada-placar">${j.gols1} × ${j.gols2}</span>
               <div class="cravada-time">${t2Img}<span class="cravada-time-nome">${j.time2}</span></div>
             </div>
-            <div class="unico-nome">${j.solo}</div>
-            <div class="unico-sub">foi o único a cravar esse placar</div>
           </div>`;
       }).join('')}
     </div>
