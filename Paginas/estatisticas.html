@@ -296,7 +296,14 @@
       flex: 1; min-width: 200px;
     }
     .cravada-time { display: flex; align-items: center; gap: 7px; }
-    .cravada-time-nome { font-size: .85rem; font-weight: 700; }
+    .cravada-time-nome {
+      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: .8px;
+      color: #fff;
+      min-width: 38px;
+      text-align: center;
+    }
     .cravada-placar {
       font-size: 1.15rem; font-weight: 800; color: var(--gold);
       letter-spacing: 1px; white-space: nowrap; padding: 0 4px;
@@ -544,7 +551,60 @@ const BANDEIRAS = {
   'Iraque':'iq','Irã':'ir','Japão':'jp','Jordânia':'jo',
   'Catar':'qa','Uzbequistão':'uz','Nova Zelândia':'nz',
 };
+  
+const TRIGRAMAS = {
+  "Argentina":"ARG",
+  "Argélia":"ALG",
+  "Arábia Saudita":"KSA",
+  "Austrália":"AUS",
+  "Áustria":"AUT",
+  "África do Sul":"RSA",
+  "Bélgica":"BEL",
+  "Bósnia e Herzegovina":"BIH",
+  "Brasil":"BRA",
+  "Cabo Verde":"CPV",
+  "Canadá":"CAN",
+  "Catar":"QAT",
+  "Colômbia":"COL",
+  "Coreia do Sul":"KOR",
+  "Costa do Marfim":"CIV",
+  "Croácia":"CRO",
+  "Curaçao":"CUW",
+  "Egito":"EGY",
+  "Equador":"ECU",
+  "Escócia":"SCO",
+  "Espanha":"ESP",
+  "Estados Unidos":"USA",
+  "França":"FRA",
+  "Gana":"GHA",
+  "Haiti":"HAI",
+  "Holanda":"NED",
+  "Inglaterra":"ENG",
+  "Irã":"IRN",
+  "Iraque":"IRQ",
+  "Japão":"JPN",
+  "Jordânia":"JOR",
+  "Marrocos":"MAR",
+  "México":"MEX",
+  "Noruega":"NOR",
+  "Nova Zelândia":"NZL",
+  "Panamá":"PAN",
+  "Paraguai":"PAR",
+  "Portugal":"POR",
+  "RD Congo":"COD",
+  "República Tcheca":"CZE",
+  "Senegal":"SEN",
+  "Suécia":"SWE",
+  "Suíça":"SUI",
+  "Tunísia":"TUN",
+  "Turquia":"TUR",
+  "Uruguai":"URU",
+  "Uzbequistão":"UZB"
+};
 
+function tri(nome){
+  return TRIGRAMAS[nome] || nome;
+}
 function flagUrl(nome) {
   const cod = BANDEIRAS[nome];
   return cod ? `https://flagcdn.com/w40/${cod}.png` : null;
@@ -873,9 +933,9 @@ async function renderCravadas(fase) {
             <div class="unico-sub">foi o único a cravar esse placar</div>
             <br>
             <div class="unico-jogo">
-              <div class="cravada-time">${t1Img}<span class="cravada-time-nome">${j.time1}</span></div>
+              <div class="cravada-time">${t1Img}<span class="cravada-time-nome">${tri(j.time1)}</span></div>
               <span class="cravada-placar">${j.gols1} × ${j.gols2}</span>
-              <div class="cravada-time">${t2Img}<span class="cravada-time-nome">${j.time2}</span></div>
+              <div class="cravada-time">${t2Img}<span class="cravada-time-nome">${tri(j.time2)}</span></div>
             </div>
           </div>`;
       }).join('')}
