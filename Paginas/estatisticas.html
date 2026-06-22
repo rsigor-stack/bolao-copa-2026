@@ -444,6 +444,27 @@
       .unicos-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       .unico-card { padding: 16px 12px; }
     }
+
+    @media (max-width: 768px){
+      .unico-jogo{
+          flex-direction: column;
+          gap: 10px;
+      }
+      .cravada-placar{
+          min-width: auto;
+          font-size: 2rem;
+      }
+      .unico-time{
+          min-width: auto;
+      }
+      .unico-time img{
+          width: 44px !important;
+          height: 32px !important;
+       }
+       .cravada-time-nome{
+           font-size: 1rem;
+       }
+   }  
   </style>
 </head>
 <body id="topo">
