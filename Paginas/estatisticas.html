@@ -248,6 +248,12 @@
       .logo h1 { font-size: 1.3rem; }
       .resumo-grid { grid-template-columns: repeat(2,1fr); }
       .podio-wrap { grid-template-columns: 1fr; padding: 18px 18px 8px; }
+
+      /* Mantém a ordem correta do pódio no mobile: 1º, 2º e 3º */
+      .podio-card.p1 { order: 1; }
+      .podio-card.p2 { order: 2; }
+      .podio-card.p3 { order: 3; }
+
       .podio-card.p1, .podio-card.p2, .podio-card.p3 { padding: 14px; }
       .barras-wrap { padding: 6px 16px 20px; }
       .barra-nome { width: 90px; font-size: .74rem; }
@@ -637,7 +643,6 @@ const BANDEIRAS = {
 };
   
 const TRIGRAMAS = {
-  "Alemanha":"ALE",
   "Argentina":"ARG",
   "Argélia":"ALG",
   "Arábia Saudita":"KSA",
