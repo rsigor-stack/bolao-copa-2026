@@ -248,12 +248,6 @@
       .logo h1 { font-size: 1.3rem; }
       .resumo-grid { grid-template-columns: repeat(2,1fr); }
       .podio-wrap { grid-template-columns: 1fr; padding: 18px 18px 8px; }
-
-      /* Mantém a ordem correta do pódio no mobile: 1º, 2º e 3º */
-      .podio-card.p1 { order: 1; }
-      .podio-card.p2 { order: 2; }
-      .podio-card.p3 { order: 3; }
-
       .podio-card.p1, .podio-card.p2, .podio-card.p3 { padding: 14px; }
       .barras-wrap { padding: 6px 16px 20px; }
       .barra-nome { width: 90px; font-size: .74rem; }
@@ -763,7 +757,7 @@ const FASES = [
   { id:'artilheiro',label:'Artilheiro',        icon:'⚽', campo:null,        tipo:'jogador',
     desc:'Jogador favorito ao título de artilheiro' },
   { id:'cravadas',  label:'Placares Exatos',   icon:'🎯', campo:null,        tipo:'cravadas',
-    desc:'Jogos em que os participantes acertaram o placar exato', grupo:'desempenho' },
+    desc:'Jogos em que participantes acertaram o placar exato', grupo:'desempenho' },
   { id:'top1',      label:'Top 1',             icon:'🥇', campo:null,        tipo:'desempenho',
     desc:'Quem mais apareceu em 1º lugar na classificação geral', grupo:'desempenho',
     campoVezes:'Top1_vezes', campoNome:'Top1_Participante' },
@@ -773,8 +767,8 @@ const FASES = [
   { id:'top10',     label:'Top 10',            icon:'🔟', campo:null,        tipo:'desempenho',
     desc:'Quem mais apareceu entre os 10 primeiros colocados', grupo:'desempenho',
     campoVezes:'Top10_vezes', campoNome:'Top10_Participante' },
-  { id:'under10',   label:'Z10',          icon:'🔻', campo:null,        tipo:'desempenho',
-    desc:'Quem mais apareceu entre os 10 últimos', grupo:'desempenho',
+  { id:'under10',   label:'Under 10',          icon:'🔻', campo:null,        tipo:'desempenho',
+    desc:'Quem mais apareceu fora do Top 10 (zona de rebaixamento)', grupo:'desempenho',
     campoVezes:'Z10_vezes', campoNome:'Z10_Participante' },
 ];
 
@@ -870,7 +864,7 @@ function renderTabs(faseAtiva) {
 // ═══════════════════════════════════════════════════════════════
 function renderFase(fase) {
   document.getElementById('cat-icon').textContent   = fase.icon;
-  document.getElementById('cat-titulo').textContent  = fase.label;
+  document.getElementById('cat-titulo').textContent  = `${fase.label} — ${fase.desc}`;
 
   if (fase.tipo === 'cravadas') {
     renderCravadas(fase);
@@ -1149,7 +1143,7 @@ async function renderDesempenho(fase) {
         <div class="podio-flag-ph" style="font-size:1.6rem;">👤</div>
         <div class="podio-nome">${item.nome}</div>
         <div class="podio-pct">${item.votos}×</div>
-        <div class="podio-votos">${pct(item.votos, totalV)}% do total</div>
+        <div class="podio-votos">&nbsp;</div>
       </div>`;
   }).join('');
 
@@ -1167,7 +1161,7 @@ async function renderDesempenho(fase) {
           <div class="barra-fill" style="width:${larg}%;"></div>
         </div>
         <span class="barra-pct">${item.votos}×</span>
-        <span class="barra-votos">${pct(item.votos, totalV)}%</span>
+        <span class="barra-votos"></span>
       </div>`;
   }).join('') || `<div style="opacity:.4;text-align:center;padding:12px 0 4px;font-size:.85rem;">Todos os participantes exibidos no pódio acima</div>`;
 }
