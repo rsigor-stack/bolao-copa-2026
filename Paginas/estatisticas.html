@@ -464,7 +464,33 @@
        .cravada-time-nome{
            font-size: 1rem;
        }
-   }  
+
+    .placar-card{
+        padding:20px 16px;
+      }
+    .placar-top{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:12px;
+      }
+      .placar-time{
+        width:100%;
+        justify-content:center;
+        text-align:center;
+        font-size: .95rem;
+        font-weight: 800;
+        letter-spacing: .5px;
+      }
+      .placar-time img{
+        width:32px;
+        height:24px;
+      }
+     .placar-score{
+        font-size:2.2rem;
+        min-width:auto;
+      }
+     }  
   </style>
 </head>
 <body id="topo">
@@ -1019,13 +1045,23 @@ async function renderCravadas(fase) {
     const soloHtml = j.solo
       ? `<span class="cravada-solo">🎯 Só ${j.solo} acertou!</span>`
       : '';
-
+    
+    // Se for mobile mostra o trigrama ao invés do nome completo da seleção
+    const nomeTime1 =
+        isMobile()
+            ? tri(j.time1)
+            : j.time1;
+    
+    const nomeTime2 =
+        isMobile()
+            ? tri(j.time2)
+            : j.time2;
     return `
       <div class="cravada-card">
         <div class="cravada-jogo">
-          <div class="cravada-time">${t1Img}<span class="cravada-time-nome">${j.time1}</span></div>
+          <div class="cravada-time">${t1Img}<span class="cravada-time-nome">${nomeTime1}</span></div>
           <span class="cravada-placar">${j.gols1} × ${j.gols2}</span>
-          <div class="cravada-time">${t2Img}<span class="cravada-time-nome">${j.time2}</span></div>
+          <div class="cravada-time">${t2Img}<span class="cravada-time-nome">${nomeTime2}</span></div>
         </div>
         <div class="cravada-info">
           <div class="cravada-count">
@@ -1067,6 +1103,11 @@ async function renderDesempenho(fase) {
     return;
   }
 
+  //Detecta se é Smart Phone
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }  
+  
   // Extrai pares (participante, vezes) a partir das colunas configuradas na fase
   const lista = dados
     .map(r => ({
