@@ -581,7 +581,7 @@ const trofeu = normalizarNivel(row.cqTrofeu || row.CqTrofeu || row['Trofeu']);
     {nivel:cravadas,emoji:'🎯',titulo:`Cravadas ${row.cqCravadas || ''} - ${row.nCravadas || 0} cravadas`},
     {nivel:pensamento,emoji:'🧠',titulo:`Pensamento Único ${(row.cqPensamentoUnico||'')} - ${(row.obsPensamentoUnico||row.ObsPensamentoUnico||'')}`},
     {nivel:foguete,emoji:'🚀',titulo:`Foguete ${(row.cqFoguete||'')} - ${(row.obsFoguete||row.ObsFoguete||'')}`},
-{nivel:trofeu,emoji:'🏆',titulo:`Trofeu ${(row.cqFoguete||'')} - ${(row.obsTrofeu||row.ObsTrofeu||'')}`},
+{nivel:trofeu,emoji:'🏆',titulo:`Trofeu ${(row.cqFoguete||'')} - ${(row.obsTrofeu||row.ObsTrofeu||'')}`}
   ].filter(i => i.nivel);
 
   const pontosValor = row.cqPontos || row['cqPontos'] || row['CQPontos'] || '';
