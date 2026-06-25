@@ -573,12 +573,15 @@ function htmlConquistas(row) {
   const cravadas = normalizarNivel(row.cqCravadas);
   const pensamento = normalizarNivel(row.cqPensamentoUnico);
   const foguete = normalizarNivel(row.cqFoguete || row.CqFoguete || row['Foguete']);
+const trofeu = normalizarNivel(row.cqTrofeu || row.CqTrofeu || row['Trofeu']);
+
 
   const itens = [
     {nivel:ranking,emoji:'🏅',titulo:`Ranking ${row.cqTopRanking || ''} - ${row.obsTopRanking || ''}`},
     {nivel:cravadas,emoji:'🎯',titulo:`Cravadas ${row.cqCravadas || ''} - ${row.nCravadas || 0} cravadas`},
     {nivel:pensamento,emoji:'🧠',titulo:`Pensamento Único ${(row.cqPensamentoUnico||'')} - ${(row.obsPensamentoUnico||row.ObsPensamentoUnico||'')}`},
-    {nivel:foguete,emoji:'🚀',titulo:`Foguete ${(row.cqFoguete||'')} - ${(row.obsFoguete||row.ObsFoguete||'')}`}
+    {nivel:foguete,emoji:'🚀',titulo:`Foguete ${(row.cqFoguete||'')} - ${(row.obsFoguete||row.ObsFoguete||'')}`},
+{nivel:trofeu,emoji:'🏆',titulo:`Trofeu ${(row.cqFoguete||'')} - ${(row.obsTrofeu||row.ObsTrofeu||'')}`},
   ].filter(i => i.nivel);
 
   const pontosValor = row.cqPontos || row['cqPontos'] || row['CQPontos'] || '';
