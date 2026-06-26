@@ -64,6 +64,40 @@
   'Nova Zelândia':'NZL',
 };
 
+//------------------------------------------------------
+// Índice TRIGRAMA → ISO
+//------------------------------------------------------
+
+Bolao.flags.BANDEIRAS_TRIGRAMA = {};
+
+Object.keys(Bolao.flags.TRIGRAMAS).forEach(nome => {
+
+    const tri = Bolao.flags.TRIGRAMAS[nome];
+
+    const iso = Bolao.flags.BANDEIRAS[nome];
+
+    if (tri && iso) {
+
+        Bolao.flags.BANDEIRAS_TRIGRAMA[tri] = iso;
+
+    }
+
+});
+
+    //------------------------------------------------------
+// Índice ISO → Nome
+//------------------------------------------------------
+
+Bolao.flags.SELECOES_ISO = {};
+
+Object.keys(Bolao.flags.BANDEIRAS).forEach(nome => {
+
+    Bolao.flags.SELECOES_ISO[
+        Bolao.flags.BANDEIRAS[nome]
+    ] = nome;
+
+});
+    
        Object.keys(
     Bolao.flags.TRIGRAMAS
 ).forEach(nome=>{
