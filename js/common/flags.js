@@ -1,8 +1,29 @@
-window.Bolao = window.Bolao || {};
+/**
+ * ==========================================================
+ * Bolão Se Joga Copa do Mundo 2026
+ * Flags / Seleções
+ * ==========================================================
+ */
 
-Bolao.flags = {};
+(function () {
 
-Bolao.flags.BANDEIRAS = {
+    "use strict";
+
+    if (!window.Bolao) {
+
+        throw new Error(
+            "core.js deve ser carregado antes de flags.js"
+        );
+
+    }
+
+    //------------------------------------------------------
+    // Objeto principal
+    //------------------------------------------------------
+
+    Bolao.flags = {
+
+  BANDEIRAS = {
   'Argentina':'ar','Brasil':'br','Colômbia':'co','Equador':'ec',
   'Paraguai':'py','Uruguai':'uy','Canadá':'ca','Curaçao':'cw',
   'Estados Unidos':'us','Haiti':'ht','México':'mx','Panamá':'pa',
@@ -18,7 +39,7 @@ Bolao.flags.BANDEIRAS = {
   'Catar':'qa','Uzbequistão':'uz','Nova Zelândia':'nz',
 };
 
-Bolao.flags.TRIGRAMAS = {
+  TRIGRAMAS = {
   // CONMEBOL
   'Argentina':'ARG','Brasil':'BRA','Colômbia':'COL','Equador':'ECU',
   'Paraguai':'PAR','Uruguai':'URU',
@@ -43,56 +64,241 @@ Bolao.flags.TRIGRAMAS = {
   'Nova Zelândia':'NZL',
 };
 
-Bolao.flags.timePorTrigrama = 
-function (tri){
+       Object.keys(
+    Bolao.flags.TRIGRAMAS
+).forEach(nome=>{
+
+    const tri =
+        Bolao.flags.TRIGRAMAS[nome];
 
     const iso =
-        Bolao.flags.BANDEIRAS_TRIGRAMA[tri];
+        Bolao.flags.BANDEIRAS[nome];
 
-    const img = iso
-        ? `
-            <img
-                src="https://flagcdn.com/w40/${iso}.png"
-                style="
-                    width:36px;
-                    height:26px;
-                    border-radius:4px;
-                    object-fit:cover;
-                    display:block;
-                    margin:auto;
-                ">
-          `
-        : "";
+    if(tri && iso){
+
+        Bolao.flags.BANDEIRAS_TRIGRAMA[
+            tri
+        ] = iso;
+
+    }
+
+});
+
+//------------------------------------------------------
+// Índice reverso por ISO
+//------------------------------------------------------
+
+Bolao.flags.SELECOES_ISO = {};
+
+Object.keys(Bolao.flags.BANDEIRAS).forEach(nome => {
+
+    const iso = Bolao.flags.BANDEIRAS[nome];
+
+    Bolao.flags.SELECOES_ISO[iso] = nome;
+
+});
+
+//------------------------------------------------------
+// Retorna todas as informações de uma seleção
+//------------------------------------------------------
+
+Bolao.flags.getSelecao = function (valor) {
+
+    if (!valor) return null;
+
+    valor = String(valor).trim();
+
+    let nome = null;
+
+    //--------------------------------------------------
+    // Pesquisa pelo nome
+    //--------------------------------------------------
+
+    if (Bolao.flags.BANDEIRAS[valor]) {
+
+        nome = valor;
+
+    }
+
+    //--------------------------------------------------
+    // Pesquisa pelo trigrama
+    //--------------------------------------------------
+
+    if (!nome) {
+
+        nome = Object.keys(Bolao.flags.TRIGRAMAS).find(
+
+            pais =>
+
+                Bolao.flags.TRIGRAMAS[pais].toUpperCase() ===
+                valor.toUpperCase()
+
+        );
+
+    }
+
+    //--------------------------------------------------
+    // Pesquisa pelo ISO
+    //--------------------------------------------------
+
+    if (!nome) {
+
+        nome = Bolao.flags.SELECOES_ISO[
+            valor.toLowerCase()
+        ];
+
+    }
+
+    //--------------------------------------------------
+    // Não encontrou
+    //--------------------------------------------------
+
+    if (!nome) {
+
+        return null;
+
+    }
+
+    const iso = Bolao.flags.BANDEIRAS[nome];
+
+    const tri = Bolao.flags.TRIGRAMAS[nome];
+
+    return {
+
+        nome,
+
+        trigrama: tri,
+
+        iso,
+
+        bandeira:
+
+            `${Bolao.config.FLAG_CDN}/w80/${iso}.png`,
+
+        //--------------------------------------------------
+        // Renderizador padrão
+        //--------------------------------------------------
+
+        render(options = {}) {
+
+            const largura = options.largura || 40;
+
+            const mostrarNome =
+                options.nome ?? false;
+
+            const mostrarTrigrama =
+                options.trigrama ?? true;
+
+            const classe =
+                options.classe || "";
+
+            const estilo =
+                options.style || "";
+
+            return `
+
+                <div class="flag-card ${classe}"
+                     style="${estilo}">
+
+                    <img
+                        src="${Bolao.config.FLAG_CDN}/w${largura}/${iso}.png"
+                        alt="${nome}"
+                        loading="lazy">
+
+                    ${
+                        mostrarTrigrama
+                        ? `<div class="flag-tri">${tri}</div>`
+                        : ""
+                    }
+
+                    ${
+                        mostrarNome
+                        ? `<div class="flag-name">${nome}</div>`
+                        : ""
+                    }
+
+                </div>
+
+            `;
+
+        }
+
+    };
+
+};
+  
+
+
+
+
+
+  
+  Bolao.flags.getISO =
+function(trigrama){
+
+    return Bolao.flags
+        .BANDEIRAS_TRIGRAMA[
+            trigrama
+        ] || null;
+
+};
+
+Bolao.flags.getTrigrama =
+function(nome){
+
+    return Bolao.flags
+        .TRIGRAMAS[nome] || "";
+
+};
+
+  Bolao.flags.getBandeira =
+function(trigrama,
+         largura=40){
+
+    const iso =
+        Bolao.flags.getISO(
+            trigrama
+        );
+
+    if(!iso) return "";
+
+    return
+
+`${Bolao.config.FLAG_CDN}/w${largura}/${iso}.png`;
+
+};
+
+
+  Bolao.flags.timePorTrigrama =
+function(tri){
+
+    const img =
+        Bolao.flags.getBandeira(
+            tri,
+            40
+        );
 
     return `
 
-        <div style="
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            gap:4px;
-            min-width:42px;
-        ">
+    <div class="time-card">
 
-            ${img}
+        <img
+            src="${img}"
+            class="flag">
 
-            <span style="
-                font-size:.72rem;
-                font-weight:700;
-                letter-spacing:.5px;
-            ">
+        <span>
 
-                ${tri}
+            ${tri}
 
-            </span>
+        </span>
 
-        </div>
+    </div>
 
     `;
 
-}
-
-//======================================================
+};
+  
+  //======================================================
 // FORMATA JOGO
 //======================================================
 Bolao.flags.formatarJogo = 
@@ -122,7 +328,7 @@ function (texto){
                 align-items:center;
                 gap:10px;">
 
-        ${Bolao.flags.timePorTrigrama(casa)}
+        ${timePorTrigrama(casa)}
 
         <strong style="color:var(--gold)">
 
@@ -130,10 +336,16 @@ function (texto){
 
         </strong>
 
-        ${Bolao.flags.timePorTrigrama(fora)}
+        ${timePorTrigrama(fora)}
 
     </div>
 
     `;
 
 }
+  
+
+    };
+
+})();
+
