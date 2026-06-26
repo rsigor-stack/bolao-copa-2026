@@ -1815,7 +1815,196 @@ TELAS GRANDES
 
 }
 
+/*==================================================
+ESTADOS DA APLICAÇÃO
+==================================================*/
 
+.is-loading{
+
+    pointer-events:none;
+
+    opacity:.60;
+
+    transition:.25s;
+
+}
+
+.is-empty{
+
+    min-height:180px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.is-error{
+
+    border:1px solid rgba(255,80,80,.35);
+
+}
+
+.is-active{
+
+    display:block;
+
+}
+
+.is-hidden{
+
+    display:none !important;
+
+}
+
+/*==================================================
+FOCUS
+==================================================*/
+
+:focus-visible{
+
+    outline:3px solid var(--accent);
+
+    outline-offset:3px;
+
+    border-radius:10px;
+
+}
+
+/*==================================================
+SELEÇÃO
+==================================================*/
+
+::selection{
+
+    background:var(--accent);
+
+    color:#04142d;
+
+}
+
+/*==================================================
+IMAGENS
+==================================================*/
+
+img{
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+}
+
+/*==================================================
+TRANSIÇÕES
+==================================================*/
+
+.perfil-module,
+.ds-card,
+.perfil-card,
+.perfil-tab{
+
+    transition:
+
+        background .25s,
+
+        color .25s,
+
+        border-color .25s,
+
+        transform .25s,
+
+        opacity .25s;
+
+}
+
+/*==================================================
+MÓDULOS
+==================================================*/
+
+[data-module]{
+
+    position:relative;
+
+}
+
+[data-module]::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+}
+
+/*==================================================
+ESTADO CARREGANDO
+==================================================*/
+
+[data-state="loading"]{
+
+    opacity:.65;
+
+}
+
+[data-state="loading"]::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    backdrop-filter:blur(2px);
+
+}
+
+/*==================================================
+ESTADO VAZIO
+==================================================*/
+
+[data-state="empty"]{
+
+    opacity:.75;
+
+}
+
+/*==================================================
+ESTADO ERRO
+==================================================*/
+
+[data-state="error"]{
+
+    border-color:#ff6961;
+
+}
+
+/*==================================================
+ANIMAÇÕES
+==================================================*/
+
+.animate-fade{
+
+    animation:fadeIn .35s;
+
+}
+
+.animate-slide{
+
+    animation:slideUp .35s;
+
+}
+
+.animate-zoom{
+
+    animation:zoomIn .30s;
+
+}
         
 
         
@@ -1940,22 +2129,25 @@ NAVEGAÇÃO
         id="perfil-grupo"
         class="perfil-section perfil-section--active">
 
-        <div
-            id="grupo-indicadores"
-            class="perfil-module">
-
-        </div>
+<div
+    id="grupo-indicadores"
+    class="perfil-module"
+    data-module="indicadores"
+    data-state="empty">
+</div>
 
         <div
             id="grupo-conquistas"
-            class="perfil-module">
-
+            class="perfil-module"
+            data-module="grupo-conquistas"
+            data-state="empty">
         </div>
 
         <div
             id="grupo-graficos"
-            class="perfil-module">
-
+            class="perfil-module"
+            data-module="grupo-graficos"
+            data-state="empty">
         </div>
 
     </section>
@@ -1970,14 +2162,16 @@ NAVEGAÇÃO
 
         <div
             id="eliminatorias-graficos"
-            class="perfil-module">
-
+            class="perfil-module"
+            data-module="eliminatorias-graficos"
+            data-state="empty">
         </div>
 
         <div
             id="eliminatorias-palpites"
-            class="perfil-module">
-
+            class="perfil-module"
+            data-module="eliminatorias-palpites"
+            data-state="empty">
         </div>
 
     </section>
@@ -1992,13 +2186,17 @@ NAVEGAÇÃO
 
         <div
             id="geral-graficos"
-            class="perfil-module">
+            class="perfil-module"
+            data-module="geral-graficos"
+            data-state="empty">
 
         </div>
 
         <div
             id="geral-comparativo"
-            class="perfil-module">
+            class="perfil-module"
+            data-module="geral-comparativo"
+            data-state="empty">
 
         </div>
 
@@ -2154,7 +2352,9 @@ HERO
 
 <section
     id="perfil-hero"
-    class="perfil-hero">
+    class="perfil-hero"
+    data-module="hero"
+    data-state="empty">
 
     <!--
         Todo o conteúdo será criado
