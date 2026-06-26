@@ -1448,6 +1448,374 @@ ANIMAÇÕES
 
 }
         
+
+
+
+/*==================================================
+RESPONSIVIDADE
+==================================================*/
+
+/*--------------------------------------------------
+NOTEBOOK
+--------------------------------------------------*/
+
+@media (max-width:1400px){
+
+    :root{
+
+        --max-width:1280px;
+
+    }
+
+}
+
+/*--------------------------------------------------
+TABLET HORIZONTAL
+--------------------------------------------------*/
+
+@media (max-width:1200px){
+
+    .layout-dashboard-main{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .layout-half{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .layout-third{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .layout-quarter{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .layout-charts{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/*--------------------------------------------------
+TABLET
+--------------------------------------------------*/
+
+@media (max-width:992px){
+
+    .perfil-page{
+
+        padding:18px;
+
+    }
+
+    .perfil-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .perfil-nav{
+
+        width:100%;
+
+    }
+
+    .perfil-nav a{
+
+        flex:1;
+
+        text-align:center;
+
+    }
+
+    .layout-third{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .layout-quarter{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .layout-auto-320,
+
+    .layout-auto-260,
+
+    .layout-auto-220{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .layout-stats{
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+    }
+
+}
+
+/*--------------------------------------------------
+CELULAR GRANDE
+--------------------------------------------------*/
+
+@media (max-width:768px){
+
+    html{
+
+        font-size:15px;
+
+    }
+
+    .perfil-logo{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .perfil-logo__icon{
+
+        width:56px;
+
+        height:56px;
+
+        font-size:1.6rem;
+
+    }
+
+    .perfil-logo h1{
+
+        font-size:1.6rem;
+
+    }
+
+    .perfil-tabs{
+
+        display:grid;
+
+        grid-template-columns:1fr;
+
+    }
+
+    .perfil-tab{
+
+        width:100%;
+
+    }
+
+    .ds-title-xl{
+
+        font-size:1.8rem;
+
+    }
+
+    .ds-title-lg{
+
+        font-size:1.35rem;
+
+    }
+
+    .ds-number{
+
+        font-size:1.7rem;
+
+    }
+
+    .layout-stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .perfil-footer{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .modal{
+
+        width:95vw;
+
+    }
+
+}
+
+/*--------------------------------------------------
+CELULAR
+--------------------------------------------------*/
+
+@media (max-width:576px){
+
+    body{
+
+        overflow-x:hidden;
+
+    }
+
+    .perfil-page{
+
+        padding:12px;
+
+    }
+
+    .perfil-card{
+
+        padding:18px;
+
+    }
+
+    .perfil-module{
+
+        padding:18px;
+
+    }
+
+    .perfil-search{
+
+        padding:10px 14px;
+
+    }
+
+    .perfil-search__input{
+
+        font-size:.92rem;
+
+    }
+
+    .ds-btn{
+
+        width:100%;
+
+    }
+
+    .ds-card{
+
+        padding:18px;
+
+    }
+
+    .loading-card{
+
+        width:90vw;
+
+    }
+
+    .toast{
+
+        right:12px;
+
+        left:12px;
+
+        bottom:12px;
+
+    }
+
+}
+
+/*--------------------------------------------------
+CELULARES MUITO PEQUENOS
+--------------------------------------------------*/
+
+@media (max-width:420px){
+
+    html{
+
+        font-size:14px;
+
+    }
+
+    .perfil-logo h1{
+
+        font-size:1.35rem;
+
+    }
+
+    .perfil-logo p{
+
+        font-size:.82rem;
+
+    }
+
+    .perfil-nav{
+
+        gap:8px;
+
+    }
+
+    .perfil-nav a{
+
+        padding:10px;
+
+        font-size:.82rem;
+
+    }
+
+    .perfil-tab{
+
+        padding:12px;
+
+        font-size:.88rem;
+
+    }
+
+    .ds-title-xl{
+
+        font-size:1.5rem;
+
+    }
+
+    .ds-number{
+
+        font-size:1.5rem;
+
+    }
+
+}
+
+/*--------------------------------------------------
+TELAS GRANDES
+--------------------------------------------------*/
+
+@media (min-width:1800px){
+
+    html{
+
+        font-size:18px;
+
+    }
+
+    .perfil-page{
+
+        max-width:1700px;
+
+    }
+
+}
+
+
         
 
         
