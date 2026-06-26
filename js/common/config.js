@@ -1,26 +1,43 @@
-//======================================================
-// CONFIGURAÇÃO GLOBAL DO SITE
-//======================================================
+/**
+ * ==========================================================
+ * CONFIGURAÇÕES GLOBAIS
+ * ==========================================================
+ */
 
-// Apps Script principal
+(function () {
 
-window.Bolao = window.Bolao || {};
+    "use strict";
 
-Bolao.config = {
-  
-const URL_BASE =
-"https://script.google.com/macros/s/AKfycbyr_jCKmx6ij0fytIqNjK4evsorDQtxdp4bcvnJ4RQMvU6TTK9zwJZZXjm__p3uyKI/exec";
+    Bolao.config = {
 
-// Pasta de imagens
-const URL_IMAGENS =
-"/imagens/";
+        //---------------------------------------
+        // Google Apps Script
+        //---------------------------------------
 
-// CDN das bandeiras
-const URL_FLAGCDN =
-"https://flagcdn.com";
+        URL_BASE:
 
-// Versão do sistema
-const APP_VERSION =
-"1.0.0";
+        "https://script.google.com/macros/s/AKfycbyr_jCKmx6ij0fytIqNjK4evsorDQtxdp4bcvnJ4RQMvU6TTK9zwJZZXjm__p3uyKI/exec",
 
-};
+        //---------------------------------------
+        // Recursos
+        //---------------------------------------
+
+        URL_FLAGCDN:
+            "https://flagcdn.com",
+
+        URL_IMAGENS:
+            "/imagens/",
+
+        //---------------------------------------
+        // Aplicação
+        //---------------------------------------
+
+        DEBUG: true,
+
+        CACHE_ATIVO: true,
+
+        TIMEOUT: 15000
+
+    };
+
+})();
