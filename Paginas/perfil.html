@@ -338,6 +338,224 @@
 
         }
 
+/*==================================================
+FOOTER
+==================================================*/
+
+.perfil-footer{
+
+    margin-top:40px;
+
+    padding:24px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    color:var(--text-soft);
+
+    font-size:.85rem;
+
+}
+
+/*==================================================
+OVERLAY
+==================================================*/
+
+.loading-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(6px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:9999;
+
+}
+
+.loading-card{
+
+    background:#071a33;
+
+    border-radius:20px;
+
+    padding:32px;
+
+    min-width:260px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.loading-text{
+
+    font-weight:600;
+
+}
+
+/*==================================================
+TOAST
+==================================================*/
+
+.toast{
+
+    position:fixed;
+
+    bottom:24px;
+
+    right:24px;
+
+    background:#062c50;
+
+    border-left:5px solid var(--accent);
+
+    padding:18px 24px;
+
+    border-radius:16px;
+
+    box-shadow:var(--shadow);
+
+    z-index:9998;
+
+}
+
+/*==================================================
+MODAL
+==================================================*/
+
+.modal-backdrop{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:9999;
+
+}
+
+.modal{
+
+    width:min(720px,92vw);
+
+    background:#071b34;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+}
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 24px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.modal-header button{
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:1.2rem;
+
+    cursor:pointer;
+
+}
+
+.modal-body{
+
+    padding:24px;
+
+}
+
+/*==================================================
+EMPTY STATE
+==================================================*/
+
+.perfil-empty{
+
+    min-height:180px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:16px;
+
+}
+
+.perfil-empty__icon{
+
+    font-size:3rem;
+
+    opacity:.55;
+
+}
+
+.perfil-empty__title{
+
+    color:var(--text-soft);
+
+}
+
+/*==================================================
+UTILITÁRIOS
+==================================================*/
+
+.hidden{
+
+    display:none !important;
+
+}
+
+</STYLE>
+
 <!--==================================================
 SELETOR DO PARTICIPANTE
 ===================================================-->
@@ -792,5 +1010,172 @@ NAVEGAÇÃO
         </div>
 
     </section>
+
+      <!--==================================================
+    FOOTER
+    ===================================================-->
+
+    <footer class="perfil-footer">
+
+        <div class="perfil-footer__left">
+
+            <strong>
+
+                Bolão Se Joga Copa do Mundo 2026
+
+            </strong>
+
+            <span>
+
+                Dashboard do Participante
+
+            </span>
+
+        </div>
+
+        <div class="perfil-footer__right">
+
+            Desenvolvido com ❤️
+
+        </div>
+
+    </footer>
+
+</main>
+
+<!--==================================================
+LOADING GLOBAL
+===================================================-->
+
+<div
+    id="loading-overlay"
+    class="loading-overlay hidden">
+
+    <div class="loading-card">
+
+        <div class="loading-spinner"></div>
+
+        <div class="loading-text">
+
+            Carregando informações...
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--==================================================
+TOAST
+===================================================-->
+
+<div
+    id="toast"
+    class="toast hidden">
+
+    <div
+        id="toast-message">
+
+    </div>
+
+</div>
+
+<!--==================================================
+MODAL
+===================================================-->
+
+<div
+    id="modal-backdrop"
+    class="modal-backdrop hidden">
+
+    <div
+        class="modal">
+
+        <div
+            class="modal-header">
+
+            <h3
+                id="modal-title">
+
+            </h3>
+
+            <button
+                id="modal-close">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <div
+            id="modal-body"
+            class="modal-body">
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--==================================================
+TEMPLATES
+===================================================-->
+
+<template id="tpl-empty">
+
+    <div class="perfil-empty">
+
+        <div class="perfil-empty__icon">
+
+            📊
+
+        </div>
+
+        <div class="perfil-empty__title">
+
+            Nenhuma informação disponível
+
+        </div>
+
+    </div>
+
+</template>
+
+<template id="tpl-loading">
+
+    <div class="loading-box">
+
+        <div class="loading-spinner"></div>
+
+        <span>
+
+            Carregando...
+
+        </span>
+
+    </div>
+
+</template>
+
+<template id="tpl-error">
+
+    <div class="perfil-empty">
+
+        <div class="perfil-empty__icon">
+
+            ⚠️
+
+        </div>
+
+        <div class="perfil-empty__title">
+
+            Erro ao carregar os dados
+
+        </div>
+
+    </div>
+
+</template>
 
 </div>
