@@ -203,127 +203,26 @@
 
         }
 
-        //------------------------------------------------------
-        // HERO
-        //------------------------------------------------------
 
-        if (
+//------------------------------------------------------
+// Dispara evento global
+//------------------------------------------------------
 
-            Bolao.perfil.hero
+Bolao.events.emit(
 
-            &&
+    "perfil:changed",
 
-            Bolao.perfil.hero.render
+    {
 
-        ) {
+        participante: nome,
 
-            Bolao.perfil.hero.render(
+        dados:
 
-                nome,
+            Bolao.perfil.state.dados
 
-                Bolao.perfil.state.dados
+    }
 
-            );
-
-        }
-
-        //------------------------------------------------------
-        // GRUPOS
-        //------------------------------------------------------
-
-        if (
-
-            Bolao.perfil.grupos
-
-            &&
-
-            Bolao.perfil.grupos.render
-
-        ) {
-
-            Bolao.perfil.grupos.render(
-
-                nome,
-
-                Bolao.perfil.state.dados
-
-            );
-
-        }
-
-        //------------------------------------------------------
-        // CONQUISTAS
-        //------------------------------------------------------
-
-        if (
-
-            Bolao.perfil.conquistas
-
-            &&
-
-            Bolao.perfil.conquistas.render
-
-        ) {
-
-            Bolao.perfil.conquistas.render(
-
-                nome,
-
-                Bolao.perfil.state.dados
-
-            );
-
-        }
-
-        //------------------------------------------------------
-        // ELIMINATÓRIAS
-        //------------------------------------------------------
-
-        if (
-
-            Bolao.perfil.eliminatorias
-
-            &&
-
-            Bolao.perfil.eliminatorias.render
-
-        ) {
-
-            Bolao.perfil.eliminatorias.render(
-
-                nome,
-
-                Bolao.perfil.state.dados
-
-            );
-
-        }
-
-        //------------------------------------------------------
-        // GERAL
-        //------------------------------------------------------
-
-        if (
-
-            Bolao.perfil.geral
-
-            &&
-
-            Bolao.perfil.geral.render
-
-        ) {
-
-            Bolao.perfil.geral.render(
-
-                nome,
-
-                Bolao.perfil.state.dados
-
-            );
-
-        }
-
-    };
+);
 
     //----------------------------------------------------------
     // Inicialização
