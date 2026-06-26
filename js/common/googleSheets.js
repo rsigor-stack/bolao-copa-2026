@@ -1,3 +1,6 @@
-carregarAba()
+Bolao.googleSheets = {};
 
-carregarVariasAbas()
+Bolao.googleSheets.carregarAba =
+async function(nome){
+
+}
