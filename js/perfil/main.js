@@ -208,22 +208,24 @@
 // Dispara evento global
 //------------------------------------------------------
 
+const perfil =
+
+    Bolao.viewModels.perfil.get(
+
+        nome,
+
+        Bolao.perfil.state.dados
+
+    );
+
 Bolao.events.emit(
 
-    "perfil:changed",
+    Bolao.EVENTS.PERFIL_CHANGED,
 
-    {
-
-        participante: nome,
-
-        dados:
-
-            Bolao.perfil.state.dados
-
-    }
+    perfil
 
 );
-
+console.log(perfil);
     //----------------------------------------------------------
     // Inicialização
     //----------------------------------------------------------
