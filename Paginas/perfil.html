@@ -1011,6 +1011,238 @@ NAVEGAÇÃO
 
     </section>
 
+<!--==================================================
+BIBLIOTECAS
+===================================================-->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!--==================================================
+CORE
+===================================================-->
+
+<script src="js/common/core.js"></script>
+
+<script src="js/common/config.js"></script>
+
+<script src="js/common/flags.js"></script>
+
+<!--==================================================
+SERVICES
+===================================================-->
+
+<script src="js/services/googleSheets.js"></script>
+
+<script src="js/services/database.js"></script>
+
+<!--==================================================
+VIEW MODELS
+===================================================-->
+
+<script src="js/viewModels/perfilViewModel.js"></script>
+
+<!--==================================================
+MÓDULOS DO PERFIL
+===================================================-->
+
+<script src="js/perfil/main.js"></script>
+
+<script src="js/perfil/hero.js"></script>
+
+<script src="js/perfil/grupos.js"></script>
+
+<script src="js/perfil/conquistas.js"></script>
+
+<script src="js/perfil/graficos.js"></script>
+
+<script src="js/perfil/eliminatorias.js"></script>
+
+<script src="js/perfil/geral.js"></script>
+
+<!--==================================================
+BOOTSTRAP
+===================================================-->
+
+<script>
+
+(function(){
+
+    "use strict";
+
+    document.addEventListener(
+
+        "DOMContentLoaded",
+
+        async function(){
+
+            try{
+
+                console.group(
+
+                    "🏆 Perfil"
+
+                );
+
+                console.log(
+
+                    "Inicializando..."
+
+                );
+
+                if(
+
+                    !window.Bolao
+
+                ){
+
+                    throw new Error(
+
+                        "Core não carregado."
+
+                    );
+
+                }
+
+                if(
+
+                    !Bolao.perfil ||
+
+                    !Bolao.perfil.init
+
+                ){
+
+                    throw new Error(
+
+                        "main.js não encontrado."
+
+                    );
+
+                }
+
+                //--------------------------------------------------
+                // Loading
+                //--------------------------------------------------
+
+                document
+
+                    .getElementById(
+
+                        "loading-overlay"
+
+                    )
+
+                    ?.classList
+
+                    .remove(
+
+                        "hidden"
+
+                    );
+
+                //--------------------------------------------------
+                // Inicializa página
+                //--------------------------------------------------
+
+                await Bolao.perfil.init();
+
+                //--------------------------------------------------
+                // Remove loading
+                //--------------------------------------------------
+
+                document
+
+                    .getElementById(
+
+                        "loading-overlay"
+
+                    )
+
+                    ?.classList
+
+                    .add(
+
+                        "hidden"
+
+                    );
+
+                console.log(
+
+                    "Perfil carregado."
+
+                );
+
+                console.groupEnd();
+
+            }
+
+            catch(e){
+
+                console.error(e);
+
+                document
+
+                    .getElementById(
+
+                        "loading-overlay"
+
+                    )
+
+                    ?.classList
+
+                    .add(
+
+                        "hidden"
+
+                    );
+
+                const toast =
+
+                    document.getElementById(
+
+                        "toast"
+
+                    );
+
+                const msg =
+
+                    document.getElementById(
+
+                        "toast-message"
+
+                    );
+
+                if(
+
+                    toast && msg
+
+                ){
+
+                    msg.innerHTML =
+
+                        e.message;
+
+                    toast.classList.remove(
+
+                        "hidden"
+
+                    );
+
+                }
+
+            }
+
+        }
+
+    );
+
+})();
+
+</script>
+
+</body>
+
+</html>
+</body>
       <!--==================================================
     FOOTER
     ===================================================-->
