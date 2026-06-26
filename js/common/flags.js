@@ -43,10 +43,11 @@ Bolao.flags.TRIGRAMAS = {
   'Nova Zelândia':'NZL',
 };
 
-function timePorTrigrama(tri){
+Bolao.flags.timePorTrigrama = 
+function (tri){
 
     const iso =
-        BANDEIRAS_TRIGRAMA[tri];
+        Bolao.flags.BANDEIRAS_TRIGRAMA[tri];
 
     const img = iso
         ? `
@@ -94,8 +95,8 @@ function timePorTrigrama(tri){
 //======================================================
 // FORMATA JOGO
 //======================================================
-
-function formatarJogo(texto){
+Bolao.flags.formatarJogo = 
+function (texto){
 
     if(!texto) return "-";
 
@@ -121,7 +122,7 @@ function formatarJogo(texto){
                 align-items:center;
                 gap:10px;">
 
-        ${timePorTrigrama(casa)}
+        ${Bolao.flags.timePorTrigrama(casa)}
 
         <strong style="color:var(--gold)">
 
@@ -129,7 +130,7 @@ function formatarJogo(texto){
 
         </strong>
 
-        ${timePorTrigrama(fora)}
+        ${Bolao.flags.timePorTrigrama(fora)}
 
     </div>
 
