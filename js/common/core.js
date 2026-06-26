@@ -99,6 +99,16 @@
 
         utils: {},
 
+        //------------------------------------------------------
+        // Sistema de Eventos
+        //------------------------------------------------------
+
+        events: {
+
+            listeners: {}
+
+        },
+
         googleSheets: {},
 
         charts: {},
@@ -133,6 +143,67 @@
 
     };
 
+
+
+
+
+//------------------------------------------------------
+// Event Bus
+//------------------------------------------------------
+
+Bolao.events = {
+
+    on(evento, callback) {
+
+        if (!Bolao.events.listeners[evento]) {
+
+            Bolao.events.listeners[evento] = [];
+
+        }
+
+        Bolao.events.listeners[evento].push(callback);
+
+    },
+
+    off(evento, callback) {
+
+        if (!Bolao.events.listeners[evento]) {
+
+            return;
+
+        }
+
+        Bolao.events.listeners[evento] =
+
+            Bolao.events.listeners[evento]
+
+                .filter(cb => cb !== callback);
+
+    },
+
+    emit(evento, payload) {
+
+        if (!Bolao.events.listeners[evento]) {
+
+            return;
+
+        }
+
+        Bolao.events.listeners[evento]
+
+            .forEach(callback => callback(payload));
+
+    }
+
+};
+
+Bolao.events.listeners = {};
+
+
+
+    
+
+    
     console.log(
         `%c${Bolao.app.nome} v${Bolao.app.versao}`,
         "color:#00d4ff;font-weight:bold;"
