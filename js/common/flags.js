@@ -1,8 +1,18 @@
-BANDEIRAS
+window.Bolao = window.Bolao || {};
 
-TRIGRAMAS
+Bolao.flags = {};
 
-BANDEIRAS_TRIGRAMA
+Bolao.flags.BANDEIRAS = {
+
+    ...
+
+};
+
+Bolao.flags.TRIGRAMAS = {
+
+    ...
+
+};
 
 timePorTrigrama()
 
