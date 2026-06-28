@@ -631,24 +631,6 @@
         <div class="resumo-stat-valor" id="resumo-jogos" style="color:var(--accent-2);">—</div>
         <div class="resumo-stat-label">Jogos pontuados</div>
       </div>
-<!--
-      <div class="resumo-stat">
-        <div class="resumo-stat-valor" id="resumo-total" style="color:var(--accent);">—</div>
-        <div class="resumo-stat-label">Acertos 2as</div>
-      </div>
-      <div class="resumo-stat">
-        <div class="resumo-stat-valor" id="resumo-exatos" style="color:var(--gold);">—</div>
-        <div class="resumo-stat-label">Acertos 8as</div>
-      </div>
-      <div class="resumo-stat">
-        <div class="resumo-stat-valor" id="resumo-jogos" style="color:var(--accent-2);">—</div>
-        <div class="resumo-stat-label">Acertos 4as</div>
-      </div>
-      <div class="resumo-stat">
-        <div class="resumo-stat-valor" id="resumo-jogos" style="color:var(--accent-2);">—</div>
-        <div class="resumo-stat-label">Acertos Semi</div>
-      </div>
---->
     </div>
 
 <div class="tabs">
@@ -949,7 +931,7 @@ function renderTabela(participante, jogos) {
 
   // Atualiza resumo
   document.getElementById('resumo-nome').textContent    = participante;
-  document.getElementById('resumo-total').textContent   = totalPts;
+  document.getElementById('resumo-total').textContent   = '-' //totalPts;
   document.getElementById('resumo-exatos').textContent  = exatos;
   document.getElementById('resumo-jogos').textContent   = pontuados;
 
