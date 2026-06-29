@@ -20,8 +20,14 @@
 
 <body id="topo">
 
+<! Monta o cabeçalho da página>
 <div id="header-placeholder"></div>
-
+<script>
+  fetch('header.html')
+    .then(r => r.text())
+    .then(html => document.getElementById('header-placeholder').innerHTML = html);
+</script>  
+  
 <div class="page-wrapper">
 
   <div class="page-title">
@@ -349,11 +355,6 @@
 <script src="JS/perfil-init.js" defer></script>
 <script src="JS/perfil-busca.js" defer></script>
 <script src="JS/utils-bandeiras.js" defer></script>
-<script>
-  fetch('header.html')
-    .then(r => r.text())
-    .then(html => document.getElementById('header-placeholder').innerHTML = html);
-</script>  
 
 </body>
 </html>
