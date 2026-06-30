@@ -543,6 +543,12 @@
     margin-bottom:10px;
 }
 
+.elim-team.eliminada {
+  opacity: .55;
+  border-color: rgba(255,255,255,.05);
+  background: rgba(255,255,255,.02);
+}
+
 .artilheiro-nome{
 
     font-size:.85rem;
@@ -682,6 +688,8 @@ const URL_PALPITES = 'https://script.google.com/macros/s/AKfycbw3S0FDdjMZbP0mnyQ
 
 const URL_ELIM = 'https://script.google.com/macros/s/AKfycbzqa0SYv8nPTePgIz33hKwpqFMluqwaRyoKdsfHPPQYipEKdll692Z5fu-7-IiGPXnI/exec?aba=Palpites_Elim';
 
+const URL_ELIMINADAS = 'https://script.google.com/macros/s/AKfycbzqa0SYv8nPTePgIz33hKwpqFMluqwaRyoKdsfHPPQYipEKdll692Z5fu-7-IiGPXnI/exec?aba=Eliminadas';
+
 let participanteSelecionado = null;
 // ═══════════════════════════════════════════════════════════════
 //  DICIONÁRIOS — 48 países da Copa 2026
@@ -717,7 +725,7 @@ const TRIGRAMAS = {
   'Suíça':'SUI','Turquia':'TUR',
   // CAF
   'África do Sul':'RSA','Argélia':'ALG','Cabo Verde':'CPV',
-  'Congo DR':'COD','Costa do Marfim':'CIV','Egito':'EGY',
+  'RD Congo':'COD','Costa do Marfim':'CIV','Egito':'EGY',
   'Gana':'GHA','Marrocos':'MAR','Senegal':'SEN','Tunísia':'TUN',
   // AFC
   'Arábia Saudita':'KSA','Austrália':'AUS','Coreia do Sul':'KOR',
@@ -787,6 +795,11 @@ const PONTOS_ELIM = {
   Campeao:30,
   Artilheiro:30
 };
+
+// ═══════════════════════════════════════════════════════════════
+//  SELEÇÕES ELIMINADAS — carregadas dinamicamente da aba 'Eliminadas'
+// ═══════════════════════════════════════════════════════════════
+const ELIMINADAS = new Set();
 
 const FLAG_STYLE_SM = 'width:26px;height:19px;border-radius:2px;object-fit:cover;display:block;margin:0 auto 2px;';
 
@@ -1048,21 +1061,27 @@ if(fase === 'Artilheiro'){
 const flag =
   BANDEIRAS[palpite];
 
+const eliminada = ELIMINADAS.has(palpite);
+const flagStyle = eliminada ? ' style="filter:grayscale(1) opacity(.4)"' : '';
+const triStyle  = eliminada ? ' style="opacity:.4"' : '';
+
 return `
 
-  <div class="elim-team ${acertou?'hit':''}">
+  <div class="elim-team ${acertou?'hit':''}${eliminada?' eliminada':''}">
 
     ${
       flag
       ? `
         <img
           class="elim-flag"
-          src="https://flagcdn.com/w80/${flag}.png">
+          src="https://flagcdn.com/w80/${flag}.png"
+          title="${eliminada ? palpite + ' — eliminada' : palpite}"
+          ${flagStyle}>
       `
       : ''
     }
 
-    <div class="elim-tri">
+    <div class="elim-tri"${triStyle}>
       ${TRIGRAMAS[palpite] || ''}
     </div>
 
@@ -1274,10 +1293,11 @@ function configurarAbas(){
 async function init() {
   try {
 
-    const [resPalpites, resElim] =
+    const [resPalpites, resElim, resEliminadas] =
       await Promise.all([
         fetch(URL_PALPITES),
-        fetch(URL_ELIM)
+        fetch(URL_ELIM),
+        fetch(URL_ELIMINADAS)
       ]);
 
     if (!resPalpites.ok)
@@ -1293,6 +1313,21 @@ async function init() {
       await resElim.json();
 
     console.log('JSON ELIM:', jsonElim);
+
+    // Popula o Set de eliminadas a partir da aba 'Eliminadas'
+    if (resEliminadas.ok) {
+      try {
+        const jsonEliminadas = await resEliminadas.json();
+        const rows = jsonEliminadas.data || jsonEliminadas || [];
+        rows.forEach(row => {
+          const nome = String(row.Eliminadas || '').trim();
+          if (nome) ELIMINADAS.add(nome);
+        });
+        console.log('ELIMINADAS:', [...ELIMINADAS]);
+      } catch(e) {
+        console.warn('Não foi possível carregar seleções eliminadas:', e);
+      }
+    }
 
     if (!json.data || !Array.isArray(json.data))
       throw new Error('Formato inesperado nos palpites.');
