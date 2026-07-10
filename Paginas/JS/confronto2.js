@@ -78,7 +78,7 @@ const NOME_FASE = {
 
     Quartas : "4as de Final",
 
-    Semis : "Semifinais",
+    Semis : "Semis",
 
     Final : "Final",
 
@@ -89,7 +89,7 @@ const NOME_FASE = {
 const PROXIMA_FASE = {
     Segundas : "Oitavas",
     Oitavas  : "Quartas",
-    Quartas  : "Semifinais",
+    Quartas  : "Semis",
     Semis    : "Final",
     Final    : "Campeao"
 };
